@@ -1,15 +1,22 @@
 {
-  "name": "treinamento",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "my-modulo-gulp",
+  "version": "0.0.0",
+  "description": "My modulo gulp",
+  "main": "",
   "scripts": {
+    "preinstall": "npm install -g gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joaomosantos/my-modulo-gulp.git"
+  },
+  "author": {
+    "name": "Max Oliveira",
+    "email": "maxmillion_kbps@outlook.com"
+  },
   "license": "ISC",
   "devDependencies": {
-    "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-less": "^3.0.3",
     "gulp-minify-css": "^1.2.1",
