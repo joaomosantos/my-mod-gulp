@@ -1,5 +1,5 @@
 {
-  "name": "my-modulo-gulp",
+  "name": "my-mod-gulp",
   "version": "0.0.0",
   "description": "My modulo gulp",
   "main": "",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joaomosantos/my-modulo-gulp.git"
+    "url": "git+https://github.com/joaomosantos/my-mod-gulp.git"
   },
   "author": {
     "name": "Max Oliveira",
