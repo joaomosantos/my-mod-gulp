@@ -17,6 +17,7 @@ gulp.task('compiler-less', function() {
 /* Sincronizar Less ao browser*/
 gulp.task('sync-less', ['compiler-less', 'watch']);
 gulp.task('less-watch', ['compiler-less'], browserSync.reload);
+gulp.watch("src/*.html").on("change", browserSync.reload);
 gulp.task('watch', function() {
   browserSync({
     server: {
