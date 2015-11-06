@@ -4,6 +4,7 @@ var minifyCSS = require('gulp-minify-css');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var browserSync = require('browser-sync');
+var autoprefixer = require('gulp-autoprefixer');
 
 gulp.task('default', function() {});
 
@@ -11,6 +12,7 @@ gulp.task('default', function() {});
 gulp.task('compiler-less', function() {
   gulp.src('src/css/less/*.less')
   .pipe(less())
+  .pipe(autoprefixer())
   .pipe(gulp.dest('src/css'));
 });
 
