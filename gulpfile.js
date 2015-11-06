@@ -17,7 +17,6 @@ gulp.task('compiler-less', function() {
 /* Sincronizar Less ao browser*/
 gulp.task('sync-less', ['compiler-less', 'watch']);
 gulp.task('less-watch', ['compiler-less'], browserSync.reload);
-gulp.watch("src/*.html").on("change", browserSync.reload);
 gulp.task('watch', function() {
   browserSync({
     server: {
@@ -25,6 +24,7 @@ gulp.task('watch', function() {
     }
   });
   gulp.watch('src/css/less/*.less' , ['less-watch']);
+  gulp.watch("src/*.html").on("change", browserSync.reload);
 });
 
 /* Concatenar todos os LESS em um único CSS */
