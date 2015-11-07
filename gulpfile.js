@@ -12,7 +12,10 @@ gulp.task('default', function() {});
 gulp.task('compiler-less', function() {
   gulp.src('src/css/less/*.less')
   .pipe(less())
-  .pipe(autoprefixer())
+  .pipe(autoprefixer({
+    browsers: ['last 2 versions'],
+    cascade: false
+  }))
   .pipe(gulp.dest('src/css'));
 });
 
