@@ -25,7 +25,11 @@ gulp.task('compiler-less', function() {
 gulp.task('compiler-sass', function() {
   gulp.src('css/sass/*.scss')
   .pipe(sass())
-  .pipe(gulp.dest('css'))
+  .pipe(autoprefixer({
+    browsers: ['last 2 versions'],
+    cascade: false
+  }))
+  .pipe(gulp.dest('css'));
 });
 
 /* Sincronizar browser*/
