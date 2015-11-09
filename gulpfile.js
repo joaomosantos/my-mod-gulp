@@ -29,7 +29,8 @@ gulp.task('compiler-sass', function() {
     browsers: ['last 2 versions'],
     cascade: false
   }))
-  .pipe(gulp.dest('css'));
+  .pipe(gulp.dest('css'))
+  .pipe(browserSync.stream());
 });
 
 /* Sincronizar browser*/
@@ -41,6 +42,7 @@ gulp.task('server', function() {
     }
   });
   gulp.watch('css/less/*.less', ['compiler-less'], browserSync.reload);
+  gulp.watch('css/sass/*.scss', ['compiler-sass'], browserSync.reload);
   gulp.watch('*.html', browserSync.reload);
 });
 
