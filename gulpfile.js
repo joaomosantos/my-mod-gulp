@@ -48,3 +48,13 @@ gulp.task('minify-css', ['concat-css'], function() {
   }))
   .pipe(gulp.dest('css/final'));
 });
+
+// Adicionar auto prefixo
+gulp.task('autoprefixer-css', function() {
+  gulp.src('css/*.css')
+  .pipe(autoprefixer({
+    browsers: ['last 2 versions'],
+    cascade: false
+  }))
+  .pipe(gulp.dest('css'));
+});
