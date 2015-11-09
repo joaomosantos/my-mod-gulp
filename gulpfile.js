@@ -10,40 +10,41 @@ gulp.task('default', function() {});
 
 /* Compilar LESS */
 gulp.task('compiler-less', function() {
-  gulp.src('src/css/less/*.less')
+  gulp.src('css/less/*.less')
   .pipe(less())
   .pipe(autoprefixer({
     browsers: ['last 2 versions'],
     cascade: false
   }))
-  .pipe(gulp.dest('src/css'))
+  .pipe(gulp.dest('css'))
   .pipe(browserSync.stream());
 });
 
-/* Sincronizar Less ao browser*/
-gulp.task('servidor-less', function() {
+/* Sincronizar browser*/
+gulp.task('server', function() {
   browserSync({
     server: {
-      baseDir: 'src/'
+      baseDir: '',
+      index: 'index.html'
     }
   });
-  gulp.watch('src/css/less/*.less', ['compiler-less'], browserSync.reload);
-  gulp.watch('src/*.html', browserSync.reload);
+  gulp.watch('css/less/*.less', ['compiler-less'], browserSync.reload);
+  gulp.watch('*.html', browserSync.reload);
 });
 
-/* Concatenar todos os LESS em um único CSS */
-gulp.task('concat-css', ['compiler-less'], function() {
-  gulp.src('src/css/*.css')
+/* Concatenar em um único CSS */
+gulp.task('concat-css', function() {
+  gulp.src('css/*.css')
   .pipe(concat('all.css'))
-  .pipe(gulp.dest('src/css/final'));
+  .pipe(gulp.dest('css/final'));
 });
 
 /* Gerar CSS minificado */
 gulp.task('minify-css', ['concat-css'], function() {
-  gulp.src('src/css/final/all.css')
+  gulp.src('css/final/all.css')
   .pipe(minifyCSS())
   .pipe(rename(function (path) {
     path.basename += '.min'
   }))
-  .pipe(gulp.dest('src/css/final'));
+  .pipe(gulp.dest('css/final'));
 });
