@@ -5,6 +5,7 @@ var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var browserSync = require('browser-sync');
 var autoprefixer = require('gulp-autoprefixer');
+var sass = require('gulp-sass');
 
 gulp.task('default', function() {});
 
@@ -18,6 +19,13 @@ gulp.task('compiler-less', function() {
   }))
   .pipe(gulp.dest('css'))
   .pipe(browserSync.stream());
+});
+
+/* Compilar SASS */
+gulp.task('compiler-sass', function() {
+  gulp.src('css/sass/*.scss')
+  .pipe(sass())
+  .pipe(gulp.dest('css'))
 });
 
 /* Sincronizar browser*/

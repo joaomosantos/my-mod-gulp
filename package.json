@@ -23,6 +23,7 @@
     "gulp-concat": "",
     "gulp-less": "",
     "gulp-minify-css": "",
-    "gulp-rename": ""
+    "gulp-rename": "",
+    "gulp-sass": ""
   }
 }
