@@ -16,20 +16,19 @@ gulp.task('compiler-less', function() {
     browsers: ['last 2 versions'],
     cascade: false
   }))
-  .pipe(gulp.dest('src/css'));
+  .pipe(gulp.dest('src/css'))
+  .pipe(browserSync.stream());
 });
 
 /* Sincronizar Less ao browser*/
-gulp.task('sync-less', ['compiler-less', 'watch']);
-gulp.task('less-watch', ['compiler-less'], browserSync.reload);
-gulp.task('watch', function() {
+gulp.task('servidor-less', function() {
   browserSync({
     server: {
       baseDir: 'src/'
     }
   });
-  gulp.watch('src/css/less/*.less' , ['less-watch']);
-  gulp.watch("src/*.html").on("change", browserSync.reload);
+  gulp.watch('src/css/less/*.less', ['compiler-less'], browserSync.reload);
+  gulp.watch('src/*.html', browserSync.reload);
 });
 
 /* Concatenar todos os LESS em um único CSS */
