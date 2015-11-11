@@ -39,7 +39,7 @@ gulp.task('server', function() {
   browserSync({
     server: {
       baseDir: './',
-      index: 'index',
+      index: 'index.html',
       /*middleware: ssi({
         baseDir: __dirname
       })*/
