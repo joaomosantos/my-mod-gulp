@@ -40,15 +40,16 @@ gulp.task('server', function() {
     server: {
       baseDir: './',
       index: 'index.html',
-      /*middleware: ssi({
-        baseDir: __dirname
-      })*/
+      middleware: ssi({
+        baseDir: __dirname,
+        ext: '.shtm'
+      })
     }
   });
   gulp.watch('css/less/*.less', ['compiler-less'], browserSync.reload);
   gulp.watch('css/sass/*.scss', ['compiler-sass'], browserSync.reload);
   gulp.watch('*.html', browserSync.reload);
-  gulp.watch('*.shtml', browserSync.reload);
+  gulp.watch('*.shtm', browserSync.reload);
 });
 
 /* Concatenar em um único CSS */
