@@ -4,6 +4,7 @@ var minifyCSS = require('gulp-minify-css');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var browserSync = require('browser-sync');
+var ssi = require('browsersync-ssi');
 var autoprefixer = require('gulp-autoprefixer');
 var sass = require('gulp-sass');
 
@@ -37,13 +38,17 @@ gulp.task('compiler-sass', function() {
 gulp.task('server', function() {
   browserSync({
     server: {
-      baseDir: '',
-      index: 'index.html'
+      baseDir: './',
+      index: 'index',
+      /*middleware: ssi({
+        baseDir: __dirname
+      })*/
     }
   });
   gulp.watch('css/less/*.less', ['compiler-less'], browserSync.reload);
   gulp.watch('css/sass/*.scss', ['compiler-sass'], browserSync.reload);
   gulp.watch('*.html', browserSync.reload);
+  gulp.watch('*.shtml', browserSync.reload);
 });
 
 /* Concatenar em um único CSS */
