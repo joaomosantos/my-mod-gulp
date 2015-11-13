@@ -22,6 +22,7 @@
     "gulp": "",
     "gulp-autoprefixer": "",
     "gulp-concat": "",
+    "gulp-image": "",
     "gulp-less": "",
     "gulp-minify-css": "",
     "gulp-rename": "",

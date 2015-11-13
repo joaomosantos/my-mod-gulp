@@ -40,4 +40,7 @@ gulp server
 
 // To assign auto prefixer in CSS
 gulp autoprefixer-css
+
+// Compress image
+gulp images
 ```

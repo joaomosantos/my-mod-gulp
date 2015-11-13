@@ -6,7 +6,8 @@ rename = require('gulp-rename'),
 browserSync = require('browser-sync'),
 ssi = require('browsersync-ssi'),
 autoprefixer = require('gulp-autoprefixer'),
-sass = require('gulp-sass');
+sass = require('gulp-sass'),
+image = require('gulp-image');
 
 var configs = {
   less: {
@@ -30,6 +31,10 @@ var configs = {
     '*.shtml',
     './css/**/*.css'
     ]
+  },
+  img: {
+    source: './images/**/*',
+    dest: './images/'
   }
 };
 
@@ -101,4 +106,11 @@ gulp.task('autoprefixer-css', function() {
     cascade: false
   }))
   .pipe(gulp.dest(configs.css.root));
+});
+
+// Comprimir imagem
+gulp.task('images', function () {
+  gulp.src(configs.img.source)
+    .pipe(image())
+    .pipe(gulp.dest(configs.img.dest));
 });
