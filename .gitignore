@@ -1,4 +1,7 @@
 node_modules
 css
+js
+images
 *.html
 *.shtm
+*.shtml
