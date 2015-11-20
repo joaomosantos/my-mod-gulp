@@ -43,4 +43,7 @@ gulp autoprefixer-css
 
 // Compress image
 gulp images
+
+// Transfer ftp (adjust parameters in gulpfile.js)
+gulp ftp-deploy
 ```

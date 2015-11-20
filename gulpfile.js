@@ -7,7 +7,8 @@ browserSync = require('browser-sync'),
 ssi = require('browsersync-ssi'),
 autoprefixer = require('gulp-autoprefixer'),
 sass = require('gulp-sass'),
-image = require('gulp-image');
+image = require('gulp-image'),
+ftp = require('gulp-ftp');
 
 var configs = {
   less: {
@@ -35,6 +36,14 @@ var configs = {
   img: {
     source: './images/**/*',
     dest: './images/'
+  },
+  ftp: {
+    source: '',
+    host: '',
+    user: '',
+    pass: '',
+    port: '21',
+    dest: '/'
   }
 };
 
@@ -113,4 +122,16 @@ gulp.task('images', function () {
   gulp.src(configs.img.source)
     .pipe(image())
     .pipe(gulp.dest(configs.img.dest));
+});
+
+// Transferir via FTP
+gulp.task('ftp-deploy', function () {
+  return gulp.src(configs.ftp.source)
+    .pipe(ftp({
+      host: configs.ftp.host,
+      user: configs.ftp.user,
+      pass: configs.ftp.pass,
+      port: configs.ftp.port,
+      remotePath: configs.ftp.dest
+    }))
 });
