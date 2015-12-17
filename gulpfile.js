@@ -44,6 +44,18 @@ var configs = {
     pass: '',
     port: '21',
     dest: '/'
+  },
+  build: {
+    source: [
+      './pdf/**/',
+      './images/**/',
+      './css/**/',
+      './js/**/',
+      './*.shtm',
+      './*.shtml',
+      './*.html'
+    ],
+    dest: './build/'
   }
 };
 
@@ -134,4 +146,10 @@ gulp.task('ftp-deploy', function () {
       port: configs.ftp.port,
       remotePath: configs.ftp.dest
     }))
+});
+
+// Gerar build
+gulp.task('build', function() {
+  gulp.src(configs.build.source, {base: './'})
+    .pipe(gulp.dest(configs.build.dest));
 });

@@ -46,4 +46,7 @@ gulp images
 
 // Transfer ftp (adjust parameters in gulpfile.js)
 gulp ftp-deploy
+
+// Generate build
+gulp build
 ```
