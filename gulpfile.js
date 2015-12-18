@@ -49,6 +49,7 @@ var configs = {
   },
   build: {
     source: [
+      './inc/**/',
       './pdf/**/',
       './images/**/',
       './css/**/',
