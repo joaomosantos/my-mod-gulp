@@ -8,7 +8,8 @@ ssi = require('browsersync-ssi'),
 autoprefixer = require('gulp-autoprefixer'),
 sass = require('gulp-sass'),
 image = require('gulp-image'),
-ftp = require('gulp-ftp');
+ftp = require('gulp-ftp'),
+zip = require('gulp-zip');
 
 var configs = {
   less: {
@@ -58,6 +59,10 @@ var configs = {
       './*.shtml',
       './*.html'
     ],
+    dest: './build/'
+  },
+  zip: {
+    source: './build/**/.',
     dest: './build/'
   }
 };
@@ -155,4 +160,10 @@ gulp.task('ftp-deploy', function () {
 gulp.task('build', function() {
   gulp.src(configs.build.source, {base: './'})
     .pipe(gulp.dest(configs.build.dest));
+});
+
+gulp.task('zip', ['build'], function() {
+  gulp.src(configs.zip.source)
+  .pipe(zip('pacote.zip'))
+  .pipe(gulp.dest(configs.zip.dest));
 });
