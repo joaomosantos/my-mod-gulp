@@ -27,10 +27,11 @@ var configs = {
   },
   sync: {
     ext: [
-    '*.html',
-    '*.shtm',
-    '*.shtml',
-    './css/**/*.css'
+    './**/*.html',
+    './**/*.shtm',
+    './**/*.shtml',
+    './css/**/*.css',
+    './js/**/*.js'
     ]
   },
   img: {
