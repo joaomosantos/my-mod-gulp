@@ -11,6 +11,10 @@ image = require('gulp-image'),
 ftp = require('gulp-ftp'),
 zip = require('gulp-zip');
 
+// zip configs
+var packageName = "pacote";
+var folderName = "dev";
+
 var configs = {
   less: {
     source: './css/less/*.less',
@@ -59,10 +63,10 @@ var configs = {
       './*.shtml',
       './*.html'
     ],
-    dest: './build/'
+    dest: './build/'+folderName
   },
   zip: {
-    source: './build/**/.',
+    source: './build/'+folderName+'/**/.',
     dest: './build/'
   }
 };
@@ -163,7 +167,7 @@ gulp.task('build', function() {
 });
 
 gulp.task('zip', ['build'], function() {
-  gulp.src(configs.zip.source)
-  .pipe(zip('pacote.zip'))
+  gulp.src(configs.zip.source, {base: './build'})
+  .pipe(zip(packageName+'.zip'))
   .pipe(gulp.dest(configs.zip.dest));
 });
