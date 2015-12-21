@@ -11,7 +11,7 @@ image = require('gulp-image'),
 ftp = require('gulp-ftp'),
 zip = require('gulp-zip');
 
-// zip configs
+// build configs
 var packageName = "pacote";
 var folderName = "dev";
 
@@ -142,14 +142,14 @@ gulp.task('autoprefixer-css', function() {
 });
 
 // Comprimir imagem
-gulp.task('images', function () {
+gulp.task('images', function() {
   gulp.src(configs.img.source)
     .pipe(image())
     .pipe(gulp.dest(configs.img.dest));
 });
 
 // Transferir via FTP
-gulp.task('ftp', function () {
+gulp.task('ftp', function() {
   return gulp.src(configs.ftp.source, {base: './build'})
     .pipe(ftp({
       host: configs.ftp.host,
