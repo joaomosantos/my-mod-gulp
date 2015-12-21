@@ -10,10 +10,13 @@ npm install
 ```js
 folder
   |__index.html //or index.shtm
+  |__inc //includes SSI
   |__css
   |   |__less
   |   |__sass
   |   |__final
+  |__js
+  |__images
   |__node_modules
   |__package.json
   |__gulpfile.js
