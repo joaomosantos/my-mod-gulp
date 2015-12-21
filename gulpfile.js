@@ -45,7 +45,7 @@ var configs = {
     dest: './images/'
   },
   ftp: {
-    source: '',
+    source: './build/' + folderName + '/**/.',
     host: '',
     user: '',
     pass: '',
@@ -150,7 +150,7 @@ gulp.task('images', function () {
 
 // Transferir via FTP
 gulp.task('ftp-deploy', function () {
-  return gulp.src(configs.ftp.source)
+  return gulp.src(configs.ftp.source, {base: './build'})
     .pipe(ftp({
       host: configs.ftp.host,
       user: configs.ftp.user,
