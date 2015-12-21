@@ -78,7 +78,7 @@ gulp.task('compiler-less', function() {
   gulp.src(configs.less.source)
   .pipe(less())
   .pipe(autoprefixer({
-    browsers: ['last 2 versions'],
+    browsers: ['last 5 versions'],
     cascade: false
   }))
   .pipe(gulp.dest(configs.less.dest))
@@ -90,7 +90,7 @@ gulp.task('compiler-sass', function() {
   gulp.src(configs.sass.source)
   .pipe(sass())
   .pipe(autoprefixer({
-    browsers: ['last 2 versions'],
+    browsers: ['last 5 versions'],
     cascade: false
   }))
   .pipe(gulp.dest(configs.sass.dest))
@@ -135,7 +135,7 @@ gulp.task('minify-css', ['concat-css'], function() {
 gulp.task('autoprefixer-css', function() {
   gulp.src(configs.css.source)
   .pipe(autoprefixer({
-    browsers: ['last 2 versions'],
+    browsers: ['last 5 versions'],
     cascade: false
   }))
   .pipe(gulp.dest(configs.css.root));
