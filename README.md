@@ -45,7 +45,7 @@ gulp autoprefixer-css
 gulp images
 
 // Transfer ftp (adjust parameters in gulpfile.js)
-gulp ftp-deploy
+gulp ftp
 
 // Generate build
 gulp build

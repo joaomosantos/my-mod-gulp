@@ -149,7 +149,7 @@ gulp.task('images', function () {
 });
 
 // Transferir via FTP
-gulp.task('ftp-deploy', function () {
+gulp.task('ftp', function () {
   return gulp.src(configs.ftp.source, {base: './build'})
     .pipe(ftp({
       host: configs.ftp.host,
