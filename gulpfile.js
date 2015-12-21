@@ -163,6 +163,9 @@ gulp.task('ftp', function() {
           user: configs.ftp.user,
           pass: res.pass,
           remotePath: configs.ftp.dest
+        }).on('error', function() {
+          console.log('## Password invalid.');
+          process.exit(true);
         }));
     }));
 });
