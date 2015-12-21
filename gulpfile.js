@@ -9,7 +9,8 @@ autoprefixer = require('gulp-autoprefixer'),
 sass = require('gulp-sass'),
 image = require('gulp-image'),
 ftp = require('gulp-ftp'),
-zip = require('gulp-zip');
+zip = require('gulp-zip'),
+prompt = require('gulp-prompt');
 
 // build configs
 var packageName = "pacote";
