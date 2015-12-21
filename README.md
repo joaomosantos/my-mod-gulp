@@ -49,4 +49,7 @@ gulp ftp
 
 // Generate build
 gulp build
+
+// Compact build
+gulp zip
 ```

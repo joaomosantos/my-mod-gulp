@@ -166,6 +166,7 @@ gulp.task('build', function() {
     .pipe(gulp.dest(configs.build.dest));
 });
 
+// Compactar build
 gulp.task('zip', ['build'], function() {
   gulp.src(configs.zip.source, {base: './build'})
   .pipe(zip(packageName+'.zip'))
