@@ -49,7 +49,6 @@ var configs = {
     source: './build/' + folderName + '/**/.',
     host: '',
     user: '',
-    pass: '',
     port: '21',
     dest: '/'
   },
@@ -151,14 +150,21 @@ gulp.task('images', function() {
 
 // Transferir via FTP
 gulp.task('ftp', function() {
-  return gulp.src(configs.ftp.source, {base: './build'})
-    .pipe(ftp({
-      host: configs.ftp.host,
-      user: configs.ftp.user,
-      pass: configs.ftp.pass,
-      port: configs.ftp.port,
-      remotePath: configs.ftp.dest
-    }))
+  gulp.src('./')
+    .pipe(prompt.prompt({
+      type: 'password',
+      name: 'pass',
+      message: 'Please enter your password'
+    }, function(res) {
+      gulp.src(configs.ftp.source, {base: './build'})
+        .pipe(ftp({
+          host: configs.ftp.host,
+          port: configs.ftp.port,
+          user: configs.ftp.user,
+          pass: res.pass,
+          remotePath: configs.ftp.dest
+        }));
+    }));
 });
 
 // Gerar build
