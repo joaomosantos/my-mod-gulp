@@ -82,7 +82,8 @@ gulp.task('default', function() {});
 gulp.task('compiler-jade', function() {
   gulp.src(configs.jade.source)
   .pipe(jade())
-  .pipe(gulp.dest(configs.jade.dest));
+  .pipe(gulp.dest(configs.jade.dest))
+  .pipe(browserSync.stream());
 });
 
 /* Compilar LESS */
@@ -123,6 +124,7 @@ gulp.task('server', function() {
   });
   gulp.watch(configs.less.source, ['compiler-less'], browserSync.reload);
   gulp.watch(configs.sass.source, ['compiler-sass'], browserSync.reload);
+  gulp.watch(configs.jade.source, ['compiler-jade'], browserSync.reload);
   gulp.watch(configs.sync.ext, browserSync.reload);
 });
 
