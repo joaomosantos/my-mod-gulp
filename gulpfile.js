@@ -38,9 +38,7 @@ var configs = {
   },
   sync: {
     ext: [
-    './*.html',
-    './*.shtm',
-    './*.shtml',
+    './{*.html,*.htm,*.shtm,*.shtml}',
     './inc/**/.',
     './css/**/*.css',
     './js/**/*.js'
@@ -64,9 +62,7 @@ var configs = {
       './images/**/',
       './css/**/',
       './js/**/',
-      './*.shtm',
-      './*.shtml',
-      './*.html'
+      './{*.html,*.htm,*.shtm,*.shtml}'
     ],
     dest: './build/' + folderName
   },

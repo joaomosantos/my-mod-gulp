@@ -6,6 +6,7 @@ build
 pdf
 inc
 *.html
+*.htm
 *.shtm
 *.shtml
 *.jade
