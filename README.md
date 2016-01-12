@@ -26,6 +26,9 @@ folder
 ### Basic Commands
 
 ```js
+// Compile JADE to HTML
+gulp compiler-jade
+
 // Compile LESS to CSS
 gulp compiler-less
 

@@ -10,13 +10,18 @@ sass = require('gulp-sass'),
 image = require('gulp-image'),
 ftp = require('gulp-ftp'),
 zip = require('gulp-zip'),
-prompt = require('gulp-prompt');
+prompt = require('gulp-prompt'),
+jade = require('gulp-jade');
 
 // build configs
 var packageName = "pacote";
 var folderName = "dev";
 
 var configs = {
+  jade: {
+    source: './*.jade',
+    dest: './'
+  },
   less: {
     source: './css/less/*.less',
     dest: './css/'
@@ -72,6 +77,13 @@ var configs = {
 };
 
 gulp.task('default', function() {});
+
+/* Compilar Jade */
+gulp.task('compiler-jade', function() {
+  gulp.src(configs.jade.source)
+  .pipe(jade())
+  .pipe(gulp.dest(configs.jade.dest));
+});
 
 /* Compilar LESS */
 gulp.task('compiler-less', function() {
