@@ -41,7 +41,8 @@ var configs = {
     './{*.html,*.htm,*.shtm,*.shtml}',
     './inc/**/.',
     './css/**/*.css',
-    './js/**/*.js'
+    './js/**/*.js',
+    './template/{*.mst,*.json}'
     ]
   },
   img: {
