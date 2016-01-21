@@ -12,13 +12,18 @@ ftp = require('gulp-ftp'),
 zip = require('gulp-zip'),
 prompt = require('gulp-prompt'),
 jade = require('gulp-jade'),
-xls2json = require('gulp-sheets2json');
+xls2json = require('gulp-sheets2json'),
+jsonFmt = require("gulp-json-fmt");
 
 // build configs
 var packageName = "pacote";
 var folderName = "dev";
 
 var configs = {
+  json: {
+    source: './json/*.json',
+    dest: './json/',
+  },
   xls: {
     source: './xls/{*.xls,*.xlsx}',
     dest: './json/',
@@ -205,5 +210,20 @@ gulp.task('zip', ['build'], function() {
 gulp.task("xls2json", function () {
   gulp.src(configs.xls.source)
     .pipe(xls2json({ filter: configs.xls.plan }))
+    .pipe(jsonFmt(jsonFmt.PRETTY))
     .pipe(gulp.dest(configs.xls.dest));
+});
+
+// Desminificar .json
+gulp.task("json-unminify", function () {
+  gulp.src(configs.json.source)
+    .pipe(jsonFmt(jsonFmt.PRETTY))
+    .pipe(gulp.dest(configs.json.dest));
+});
+
+// Minifica .json
+gulp.task("json-minify", function () {
+  gulp.src(configs.json.source)
+    .pipe(jsonFmt(jsonFmt.MINI))
+    .pipe(gulp.dest(configs.json.dest));
 });

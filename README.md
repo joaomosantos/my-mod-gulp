@@ -57,6 +57,12 @@ gulp images
 // Usage (!) ignore column
 gulp xls2json
 
+// Minify .Json
+gulp json-minify
+
+// UnMinify .Json
+gulp json-unminify
+
 // Transfer ftp (adjust parameters in gulpfile.js)
 gulp ftp
 
