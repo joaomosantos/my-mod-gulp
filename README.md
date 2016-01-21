@@ -54,6 +54,7 @@ gulp autoprefixer-css
 gulp images
 
 // Compile .Xls and .Xlsx to .Json
+// Usage (!) ignore column
 gulp xls2json
 
 // Transfer ftp (adjust parameters in gulpfile.js)

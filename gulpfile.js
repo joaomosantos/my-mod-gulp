@@ -204,6 +204,6 @@ gulp.task('zip', ['build'], function() {
 // Converter .xls and .xlsx para .json
 gulp.task("xls2json", function () {
   gulp.src(configs.xls.source)
-    .pipe(xls2json({ filter: configs.xls.plan })) //.pipe(xls2json({ filter: "+(Plan1|Plan2)" }))
+    .pipe(xls2json({ filter: configs.xls.plan }))
     .pipe(gulp.dest(configs.xls.dest));
 });
