@@ -6,6 +6,8 @@ build
 pdf
 inc
 template
+xls
+json
 *.html
 *.htm
 *.shtm

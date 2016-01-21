@@ -11,13 +11,19 @@ image = require('gulp-image'),
 ftp = require('gulp-ftp'),
 zip = require('gulp-zip'),
 prompt = require('gulp-prompt'),
-jade = require('gulp-jade');
+jade = require('gulp-jade'),
+xls2json = require('gulp-sheets2json');
 
 // build configs
 var packageName = "pacote";
 var folderName = "dev";
 
 var configs = {
+  xls: {
+    source: './xls/{*.xls,*.xlsx}',
+    dest: './json/',
+    plan: '' //All Plan(Tabs) Or plan: '+(Plan1|Plan3)'
+  },
   jade: {
     source: './*.jade',
     dest: './'
@@ -42,7 +48,8 @@ var configs = {
     './inc/**/.',
     './css/**/*.css',
     './js/**/*.js',
-    './template/{*.mst,*.json}'
+    './template/*.mst',
+    './json/*.json'
     ]
   },
   img: {
@@ -192,4 +199,11 @@ gulp.task('zip', ['build'], function() {
   gulp.src(configs.zip.source, {base: './build'})
   .pipe(zip(packageName+'.zip'))
   .pipe(gulp.dest(configs.zip.dest));
+});
+
+// Converter .xls and .xlsx para .json
+gulp.task("xls2json", function () {
+  gulp.src(configs.xls.source)
+    .pipe(xls2json({ filter: configs.xls.plan })) //.pipe(xls2json({ filter: "+(Plan1|Plan2)" }))
+    .pipe(gulp.dest(configs.xls.dest));
 });
