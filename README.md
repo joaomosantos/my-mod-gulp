@@ -17,6 +17,9 @@ folder
   |   |__final
   |__js
   |__images
+  |__xls
+  |__json
+  |__template
   |__node_modules
   |__package.json
   |__gulpfile.js
@@ -49,6 +52,9 @@ gulp autoprefixer-css
 
 // Compress image
 gulp images
+
+// Compile .Xls and .Xlsx to .Json
+gulp xls2json
 
 // Transfer ftp (adjust parameters in gulpfile.js)
 gulp ftp
