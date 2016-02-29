@@ -13,7 +13,8 @@ zip = require('gulp-zip'),
 prompt = require('gulp-prompt'),
 jade = require('gulp-jade'),
 xls2json = require('gulp-sheets2json'),
-jsonFmt = require("gulp-json-fmt");
+jsonFmt = require("gulp-json-fmt"),
+less2sass = require('gulp-less2sass');;
 
 // build configs
 var packageName = "pacote";
@@ -39,7 +40,8 @@ var configs = {
   },
   sass: {
     source: './css/sass/*.scss',
-    dest: './css/'
+    dest: './css/',
+    root: './css/sass/'
   },
   css: {
     source: './css/*.css',
@@ -117,6 +119,13 @@ gulp.task('compiler-sass', function() {
   }))
   .pipe(gulp.dest(configs.sass.dest))
   .pipe(browserSync.stream());
+});
+
+/*Convert lESS to SASS*/
+gulp.task('less2sass', function() {
+	gulp.src(configs.less.source)
+	 .pipe(less2sass())
+   .pipe(gulp.dest(configs.sass.root));
 });
 
 /* Sincronizar browser*/

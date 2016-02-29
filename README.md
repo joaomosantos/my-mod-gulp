@@ -38,6 +38,9 @@ gulp compiler-less
 // Compile SASS to CSS
 gulp compiler-sass
 
+// Convert lESS to SASS
+gulp less2sass
+
 // Joining in a single css (all.css)
 gulp concat-css
 
