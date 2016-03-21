@@ -14,7 +14,7 @@ prompt = require('gulp-prompt'),
 jade = require('gulp-jade'),
 xls2json = require('gulp-sheets2json'),
 jsonFmt = require("gulp-json-fmt"),
-less2sass = require('gulp-less2sass');;
+less2sass = require('gulp-less2sass');
 
 // build configs
 var packageName = "pacote";
