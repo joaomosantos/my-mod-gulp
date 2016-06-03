@@ -22,46 +22,46 @@ var folderName = "dev";
 
 var configs = {
   json: {
-    source: './json/*.json',
-    dest: './json/',
+    source: './app/json/*.json',
+    dest: './app/json/',
   },
   xls: {
-    source: './xls/{*.xls,*.xlsx}',
-    dest: './json/',
+    source: './app/xls/{*.xls,*.xlsx}',
+    dest: './app/json/',
     plan: '' //All Plan(Tabs) Or plan: '+(Plan1|Plan3)'
   },
   jade: {
-    source: './*.jade',
-    dest: './'
+    source: './app/*.jade',
+    dest: './app/'
   },
   less: {
-    source: './css/less/*.less',
-    dest: './css/'
+    source: './app/css/less/*.less',
+    dest: './app/css/'
   },
   sass: {
-    source: './css/sass/*.scss',
-    dest: './css/',
-    root: './css/sass/'
+    source: './app/css/sass/*.scss',
+    dest: './app/css/',
+    root: './app/css/sass/'
   },
   css: {
-    source: './css/*.css',
-    dest: './css/final/',
+    source: './app/css/*.css',
+    dest: './app/css/final/',
     main: 'all.css',
-    root: './css/'
+    root: './app/css/'
   },
   sync: {
     ext: [
-    './{*.html,*.htm,*.shtm,*.shtml}',
-    './inc/**/.',
-    './css/**/*.css',
-    './js/**/*.js',
-    './template/*.mst',
-    './json/*.json'
+    './app/{*.html,*.htm,*.shtm,*.shtml}',
+    './app/inc/**/.',
+    './app/css/**/*.css',
+    './app/js/**/*.js',
+    './app/template/*.mst',
+    './app/json/*.json'
     ]
   },
   img: {
-    source: './images/**/*',
-    dest: './images/'
+    source: './app/images/**/*',
+    dest: './app/images/'
   },
   ftp: {
     source: './build/' + folderName + '/**/.',
@@ -72,15 +72,16 @@ var configs = {
   },
   build: {
     source: [
-      './inc/**/',
-      './pdf/**/',
-      './images/**/',
-      './xls/**/',
-      './template/**/',
-      './json/**/',
-      './css/**/',
-      './js/**/',
-      './{*.html,*.htm,*.shtm,*.shtml}'
+      './app/favicon.ico',
+      './app/inc/**/',
+      './app/pdf/**/',
+      './app/images/**/',
+      './app/xls/**/',
+      './app/template/**/',
+      './app/json/**/',
+      './app/css/**/',
+      './app/js/**/',
+      './app/{*.html,*.htm,*.shtm,*.shtml}'
     ],
     dest: './build/' + folderName
   },
@@ -135,10 +136,10 @@ gulp.task('less2sass', function() {
 gulp.task('server', function() {
   browserSync({
     server: {
-      baseDir: './',
+      baseDir: './app/',
       index: 'index.html',
       middleware: ssi({
-        baseDir: __dirname,
+        baseDir: './app/',
         ext: '.shtm'
       })
     }
@@ -185,7 +186,7 @@ gulp.task('images', function() {
 
 // Transferir via FTP
 gulp.task('ftp', function() {
-  gulp.src('./')
+  gulp.src('./app/')
     .pipe(prompt.prompt({
       type: 'password',
       name: 'pass',
@@ -207,7 +208,7 @@ gulp.task('ftp', function() {
 
 // Gerar build
 gulp.task('build', function() {
-  gulp.src(configs.build.source, {base: './'})
+  gulp.src(configs.build.source, {base: './app/'})
     .pipe(gulp.dest(configs.build.dest));
 });
 

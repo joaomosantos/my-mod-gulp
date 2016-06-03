@@ -9,22 +9,23 @@ npm install
 
 ```js
 folder
-  |__index.html //or index.shtm
-  |__inc //includes SSI
-  |__css
-  |   |__less
-  |   |__sass
-  |   |__final
-  |__js
-  |__images
-  |__xls
-  |__json
-  |__template
-  |__node_modules
-  |__package.json
   |__gulpfile.js
+  |__package.json
   |__.gitignore
   |__README.md
+  |__node_modules
+  |__app
+      |__index.html //or index.shtm
+      |__inc //includes SSI
+      |__css
+          |__fonts
+          |__less
+          |__sass
+      |__js
+      |__images
+      |__xls
+      |__json
+      |__template
 ```
 ### Basic Commands
 

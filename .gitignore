@@ -1,15 +1,3 @@
 node_modules
-css
-js
-images
+app
 build
-pdf
-inc
-template
-xls
-json
-*.html
-*.htm
-*.shtm
-*.shtml
-*.jade
