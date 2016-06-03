@@ -18,9 +18,9 @@ folder
       |__index.html //or index.shtm
       |__inc //includes SSI
       |__css
-          |__fonts
-          |__less
-          |__sass
+      |   |__fonts
+      |   |__less
+      |   |__sass
       |__js
       |__images
       |__xls
