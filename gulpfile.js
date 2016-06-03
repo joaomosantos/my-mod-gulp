@@ -75,6 +75,9 @@ var configs = {
       './inc/**/',
       './pdf/**/',
       './images/**/',
+      './xls/**/',
+      './template/**/',
+      './json/**/',
       './css/**/',
       './js/**/',
       './{*.html,*.htm,*.shtm,*.shtml}'
