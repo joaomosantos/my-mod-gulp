@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
 less = require('gulp-less'),
 minifyCSS = require('gulp-minify-css'),
+minifyJS = require('gulp-uglify'),
 concat = require('gulp-concat'),
 rename = require('gulp-rename'),
 browserSync = require('browser-sync'),
@@ -108,8 +109,19 @@ gulp.task('default', function() {});
 
 /* Deploy Components Bower */
 gulp.task('bower-deploy', function() {
-  gulp.src(configs.deploy.js).pipe(gulp.dest(configs.js.vendor));
-  gulp.src(configs.deploy.css).pipe(gulp.dest(configs.css.vendor));
+  gulp.src(configs.deploy.js)
+  .pipe(minifyJS())
+  .pipe(rename(function (path) {
+    path.basename += '.min'
+  }))
+  .pipe(gulp.dest(configs.js.vendor));
+
+  gulp.src(configs.deploy.css)
+  .pipe(minifyCSS())
+  .pipe(rename(function (path) {
+    path.basename += '.min'
+  }))
+  .pipe(gulp.dest(configs.css.vendor));
 });
 
 /* Compilar Jade */
