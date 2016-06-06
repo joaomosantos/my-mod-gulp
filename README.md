@@ -26,7 +26,6 @@ folder
       |   |__sass
       |__js
       |__images
-      |__xls
       |__json
       |__template
 ```
@@ -36,17 +35,11 @@ folder
 // Deploy packages bower
 gulp bower-deploy
 
-// Compile JADE to HTML
-gulp compiler-jade
-
 // Compile LESS to CSS
 gulp compiler-less
 
 // Compile SASS to CSS
 gulp compiler-sass
-
-// Convert lESS to SASS
-gulp less2sass
 
 // Joining in a single css (all.css)
 gulp concat-css
@@ -62,10 +55,6 @@ gulp autoprefixer-css
 
 // Compress image
 gulp images
-
-// Compile .Xls and .Xlsx to .Json
-// Usage (!) ignore column
-gulp xls2json
 
 // Minify .Json
 gulp json-minify

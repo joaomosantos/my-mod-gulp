@@ -1,21 +1,18 @@
 var gulp = require('gulp'),
-less = require('gulp-less'),
-minifyCSS = require('gulp-minify-css'),
-minifyJS = require('gulp-uglify'),
-concat = require('gulp-concat'),
-rename = require('gulp-rename'),
 browserSync = require('browser-sync'),
 ssi = require('browsersync-ssi'),
-autoprefixer = require('gulp-autoprefixer'),
+less = require('gulp-less'),
 sass = require('gulp-sass'),
+minifyCSS = require('gulp-minify-css'),
+minifyJS = require('gulp-uglify'),
+minifyJSON = require("gulp-json-fmt"),
 image = require('gulp-image'),
+autoprefixer = require('gulp-autoprefixer'),
+concat = require('gulp-concat'),
+rename = require('gulp-rename'),
 ftp = require('gulp-ftp'),
 zip = require('gulp-zip'),
-prompt = require('gulp-prompt'),
-jade = require('gulp-jade'),
-xls2json = require('gulp-sheets2json'),
-jsonFmt = require("gulp-json-fmt"),
-less2sass = require('gulp-less2sass');
+prompt = require('gulp-prompt');
 
 // build configs
 var packageName = "pacote";
@@ -26,23 +23,13 @@ var configs = {
     source: './app/json/*.json',
     dest: './app/json/',
   },
-  xls: {
-    source: './app/xls/{*.xls,*.xlsx}',
-    dest: './app/json/',
-    plan: '' //All Plan(Tabs) Or plan: '+(Plan1|Plan3)'
-  },
-  jade: {
-    source: './app/*.jade',
-    dest: './app/'
-  },
   less: {
     source: './app/css/less/*.less',
     dest: './app/css/'
   },
   sass: {
     source: './app/css/sass/*.scss',
-    dest: './app/css/',
-    root: './app/css/sass/'
+    dest: './app/css/'
   },
   css: {
     source: './app/css/*.css',
@@ -81,7 +68,6 @@ var configs = {
       './app/inc/**/',
       './app/pdf/**/',
       './app/images/**/',
-      './app/xls/**/',
       './app/template/**/',
       './app/json/**/',
       './app/css/**/',
@@ -124,13 +110,6 @@ gulp.task('bower-deploy', function() {
   .pipe(gulp.dest(configs.css.vendor));
 });
 
-/* Compilar Jade */
-gulp.task('compiler-jade', function() {
-  gulp.src(configs.jade.source)
-  .pipe(jade())
-  .pipe(gulp.dest(configs.jade.dest))
-  .pipe(browserSync.stream());
-});
 
 /* Compilar LESS */
 gulp.task('compiler-less', function() {
@@ -156,12 +135,6 @@ gulp.task('compiler-sass', function() {
   .pipe(browserSync.stream());
 });
 
-/*Convert lESS to SASS*/
-gulp.task('less2sass', function() {
-	gulp.src(configs.less.source)
-	 .pipe(less2sass())
-   .pipe(gulp.dest(configs.sass.root));
-});
 
 /* Sincronizar browser*/
 gulp.task('server', function() {
@@ -177,7 +150,6 @@ gulp.task('server', function() {
   });
   gulp.watch(configs.less.source, ['compiler-less'], browserSync.reload);
   gulp.watch(configs.sass.source, ['compiler-sass'], browserSync.reload);
-  gulp.watch(configs.jade.source, ['compiler-jade'], browserSync.reload);
   gulp.watch(configs.sync.ext, browserSync.reload);
 });
 
@@ -250,24 +222,16 @@ gulp.task('zip', ['build'], function() {
   .pipe(gulp.dest(configs.zip.dest));
 });
 
-// Converter .xls and .xlsx para .json
-gulp.task("xls2json", function () {
-  gulp.src(configs.xls.source)
-    .pipe(xls2json({ filter: configs.xls.plan }))
-    .pipe(jsonFmt(jsonFmt.PRETTY))
-    .pipe(gulp.dest(configs.xls.dest));
-});
-
 // Desminificar .json
 gulp.task("json-unminify", function () {
   gulp.src(configs.json.source)
-    .pipe(jsonFmt(jsonFmt.PRETTY))
+    .pipe(minifyJSON(minifyJSON.PRETTY))
     .pipe(gulp.dest(configs.json.dest));
 });
 
 // Minifica .json
 gulp.task("json-minify", function () {
   gulp.src(configs.json.source)
-    .pipe(jsonFmt(jsonFmt.MINI))
+    .pipe(minifyJSON(minifyJSON.MINI))
     .pipe(gulp.dest(configs.json.dest));
 });
