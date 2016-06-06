@@ -14,6 +14,9 @@ folder
   |__.gitignore
   |__README.md
   |__node_modules
+  |__bower.json
+  |__.bowerrc
+  |__bower_components
   |__app
       |__index.html //or index.shtm
       |__inc //includes SSI
@@ -30,6 +33,9 @@ folder
 ### Basic Commands
 
 ```js
+// Deploy packages bower
+gulp bower-deploy
+
 // Compile JADE to HTML
 gulp compiler-jade
 

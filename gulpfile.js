@@ -47,7 +47,11 @@ var configs = {
     source: './app/css/*.css',
     dest: './app/css/final/',
     main: 'all.css',
-    root: './app/css/'
+    root: './app/css/',
+    vendor: './app/css/vendor/'
+  },
+  js: {
+    vendor: './app/js/vendor/'
   },
   sync: {
     ext: [
@@ -88,10 +92,25 @@ var configs = {
   zip: {
     source: './build/' + folderName + '/**/.',
     dest: './build/'
+  },
+  deploy: {
+    js: [
+      './bower_components/jquery/dist/jquery.js',
+      './bower_components/modernizr/modernizr.js'
+    ],
+    css: [
+      './bower_components/normalize-css/normalize.css'
+    ]
   }
 };
 
 gulp.task('default', function() {});
+
+/* Deploy Components Bower */
+gulp.task('bower-deploy', function() {
+  gulp.src(configs.deploy.js).pipe(gulp.dest(configs.js.vendor));
+  gulp.src(configs.deploy.css).pipe(gulp.dest(configs.css.vendor));
+});
 
 /* Compilar Jade */
 gulp.task('compiler-jade', function() {
