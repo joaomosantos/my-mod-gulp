@@ -94,7 +94,7 @@ var configs = {
 gulp.task('default', function() {});
 
 /* Deploy Components Bower */
-gulp.task('bower-deploy', function() {
+gulp.task('deploy-vendor', function() {
   gulp.src(configs.deploy.js)
   .pipe(minifyJS())
   .pipe(rename(function (path) {

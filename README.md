@@ -33,7 +33,7 @@ folder
 
 ```js
 // Deploy packages bower
-gulp bower-deploy
+gulp deploy-vendor
 
 // Compile LESS to CSS
 gulp compiler-less
