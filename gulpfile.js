@@ -83,7 +83,8 @@ var configs = {
   deploy: {
     js: [
       './bower_components/jquery/dist/jquery.js',
-      './bower_components/modernizr/modernizr.js'
+      './bower_components/modernizr/modernizr.js',
+      './bower_components/respond/src/respond.js'
     ],
     css: [
       './bower_components/normalize-css/normalize.css'
