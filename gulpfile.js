@@ -33,12 +33,14 @@ var configs = {
   },
   css: {
     source: './app/css/*.css',
-    dest: './app/css/final/',
-    main: 'all.css',
-    root: './app/css/',
+    dest: './app/css/',
+    minify: './app/css/minified/',
     vendor: './app/css/vendor/'
   },
   js: {
+    source: './app/js/*.js',
+    dest: './app/js/',
+    minify: './app/js/minified/',
     vendor: './app/js/vendor/'
   },
   sync: {
@@ -154,23 +156,6 @@ gulp.task('server', function() {
   gulp.watch(configs.sync.ext, browserSync.reload);
 });
 
-/* Concatenar em um único CSS */
-gulp.task('concat-css', function() {
-  gulp.src(configs.css.source)
-  .pipe(concat(configs.css.main))
-  .pipe(gulp.dest(configs.css.dest));
-});
-
-/* Gerar CSS minificado */
-gulp.task('minify-css', ['concat-css'], function() {
-  gulp.src(configs.css.dest + configs.css.main)
-  .pipe(minifyCSS())
-  .pipe(rename(function (path) {
-    path.basename += '.min'
-  }))
-  .pipe(gulp.dest(configs.css.dest));
-});
-
 // Adicionar auto prefixo
 gulp.task('autoprefixer-css', function() {
   gulp.src(configs.css.source)
@@ -178,7 +163,7 @@ gulp.task('autoprefixer-css', function() {
     browsers: ['last 5 versions'],
     cascade: false
   }))
-  .pipe(gulp.dest(configs.css.root));
+  .pipe(gulp.dest(configs.css.dest));
 });
 
 // Comprimir imagem
@@ -207,6 +192,40 @@ gulp.task('ftp', function() {
           console.log('## Password invalid.');
           process.exit(true);
         }));
+    }));
+});
+
+//Gerar CSS minificado 
+gulp.task('minify-css', function() {
+  gulp.src('./app/')
+  .pipe(prompt.prompt({
+      type: 'input',
+      name: 'file',
+      message: 'Digite o nome do arquivo para minificar Ex: main.css'
+    }, function(res) {
+      gulp.src(configs.css.dest + res.file)
+      .pipe(minifyCSS())
+      .pipe(rename(function (path) {
+        path.basename += '.min'
+      }))
+      .pipe(gulp.dest(configs.css.minify));
+    }));
+});
+
+//Gerar JS minificado 
+gulp.task('minify-js', function() {
+  gulp.src('./app/')
+  .pipe(prompt.prompt({
+      type: 'input',
+      name: 'file',
+      message: 'Digite o nome do arquivo para minificar Ex: main.js'
+    }, function(res) {
+      gulp.src(configs.js.dest + res.file)
+      .pipe(minifyJS())
+      .pipe(rename(function (path) {
+        path.basename += '.min'
+      }))
+      .pipe(gulp.dest(configs.js.minify));
     }));
 });
 

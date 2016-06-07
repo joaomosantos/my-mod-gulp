@@ -20,9 +20,9 @@ folder
   |__app
       |__index.html //or index.shtm
       |__inc //includes SSI
-      |__css
-      |   |__fonts
+      |__csss
       |   |__less
+      |   |__font
       |   |__sass
       |__js
       |__images
@@ -32,8 +32,20 @@ folder
 ### Basic Commands
 
 ```js
+// Start BrowserSync (support SSI)
+gulp server
+
 // Deploy packages bower
 gulp deploy-vendor
+
+// Generate build
+gulp build
+
+// Compact build
+gulp zip
+
+// Transfer ftp (adjust parameters in gulpfile.js)
+gulp ftp
 
 // Compile LESS to CSS
 gulp compiler-less
@@ -41,17 +53,11 @@ gulp compiler-less
 // Compile SASS to CSS
 gulp compiler-sass
 
-// Joining in a single css (all.css)
-gulp concat-css
-
-// Minify all.css (all.min.css)
+// Minify css
 gulp minify-css
 
-// Start BrowserSync (support SSI)
-gulp server
-
-// To assign auto prefixer in CSS
-gulp autoprefixer-css
+// Minify css
+gulp minify-js
 
 // Compress image
 gulp images
@@ -62,12 +68,6 @@ gulp json-minify
 // UnMinify .Json
 gulp json-unminify
 
-// Transfer ftp (adjust parameters in gulpfile.js)
-gulp ftp
-
-// Generate build
-gulp build
-
-// Compact build
-gulp zip
+// To assign auto prefixer in CSS
+gulp autoprefixer-css
 ```
