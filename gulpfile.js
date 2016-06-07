@@ -98,19 +98,8 @@ gulp.task('default', function() {});
 
 /* Deploy Components Bower */
 gulp.task('deploy-vendor', function() {
-  gulp.src(configs.deploy.js)
-  .pipe(minifyJS())
-  .pipe(rename(function (path) {
-    path.basename += '.min'
-  }))
-  .pipe(gulp.dest(configs.js.vendor));
-
-  gulp.src(configs.deploy.css)
-  .pipe(minifyCSS())
-  .pipe(rename(function (path) {
-    path.basename += '.min'
-  }))
-  .pipe(gulp.dest(configs.css.vendor));
+  gulp.src(configs.deploy.js).pipe(gulp.dest(configs.js.vendor));
+  gulp.src(configs.deploy.css).pipe(gulp.dest(configs.css.vendor));
 });
 
 
