@@ -1,4 +1,5 @@
 var gulp = require('gulp'),
+menu = require("gulp-menu"),
 browserSync = require('browser-sync'),
 ssi = require('browsersync-ssi'),
 less = require('gulp-less'),
@@ -95,7 +96,7 @@ var configs = {
   }
 };
 
-gulp.task('default', function() {});
+gulp.task('default', function() { menu(this); });
 
 /* Deploy Components Bower */
 gulp.task('deploy-vendor', function() {
