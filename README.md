@@ -1,8 +1,16 @@
 # My Modulo Gulp
 
+### Preinstall / Global
+
+```js
+npm install -g bower
+npm install -g gulp
+```
+
 ### Usage / Install
 
 ```js
+bower install
 npm install
 ```
 ### Folders / Structure
