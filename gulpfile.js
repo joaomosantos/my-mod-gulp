@@ -227,7 +227,7 @@ gulp.task('zip', ['build'], function() {
 });
 
 // Transferir via FTP
-gulp.task('ftp', function() {
+gulp.task('ftp', ['build'], function() {
   gulp.src('./app/')
   .pipe(prompt.prompt({
     type: 'password',
