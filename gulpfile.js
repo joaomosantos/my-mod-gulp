@@ -4,11 +4,11 @@ browserSync = require('browser-sync'),
 ssi = require('browsersync-ssi'),
 less = require('gulp-less'),
 sass = require('gulp-sass'),
+autoprefixer = require('gulp-autoprefixer'),
 minifyCSS = require('gulp-minify-css'),
 minifyJS = require('gulp-uglify'),
 minifyJSON = require("gulp-json-fmt"),
 image = require('gulp-image'),
-autoprefixer = require('gulp-autoprefixer'),
 concat = require('gulp-concat'),
 rename = require('gulp-rename'),
 ftp = require('gulp-ftp'),
@@ -98,12 +98,22 @@ var configs = {
 
 gulp.task('default', function() { menu(this); });
 
-/* Deploy Components Bower */
-gulp.task('deploy-vendor', function() {
-  gulp.src(configs.deploy.js).pipe(gulp.dest(configs.js.vendor));
-  gulp.src(configs.deploy.css).pipe(gulp.dest(configs.css.vendor));
+/* Sincronizar browser*/
+gulp.task('server', function() {
+  browserSync({
+    server: {
+      baseDir: './app/',
+      index: 'index.html',
+      middleware: ssi({
+        baseDir: './app/',
+        ext: '.shtm'
+      })
+    }
+  });
+  gulp.watch(configs.less.source, ['compiler-less'], browserSync.reload);
+  gulp.watch(configs.sass.source, ['compiler-sass'], browserSync.reload);
+  gulp.watch(configs.sync.ext, browserSync.reload);
 });
-
 
 /* Compilar LESS */
 gulp.task('compiler-less', function() {
@@ -129,24 +139,6 @@ gulp.task('compiler-sass', function() {
   .pipe(browserSync.stream());
 });
 
-
-/* Sincronizar browser*/
-gulp.task('server', function() {
-  browserSync({
-    server: {
-      baseDir: './app/',
-      index: 'index.html',
-      middleware: ssi({
-        baseDir: './app/',
-        ext: '.shtm'
-      })
-    }
-  });
-  gulp.watch(configs.less.source, ['compiler-less'], browserSync.reload);
-  gulp.watch(configs.sass.source, ['compiler-sass'], browserSync.reload);
-  gulp.watch(configs.sync.ext, browserSync.reload);
-});
-
 // Adicionar auto prefixo
 gulp.task('autoprefixer-css', function() {
   gulp.src(configs.css.source)
@@ -155,35 +147,6 @@ gulp.task('autoprefixer-css', function() {
     cascade: false
   }))
   .pipe(gulp.dest(configs.css.dest));
-});
-
-// Comprimir imagem
-gulp.task('images', function() {
-  gulp.src(configs.img.source)
-  .pipe(image())
-  .pipe(gulp.dest(configs.img.dest));
-});
-
-// Transferir via FTP
-gulp.task('ftp', function() {
-  gulp.src('./app/')
-  .pipe(prompt.prompt({
-    type: 'password',
-    name: 'pass',
-    message: 'Please enter your password'
-  }, function(res) {
-    gulp.src(configs.ftp.source, {base: './build'})
-    .pipe(ftp({
-      host: configs.ftp.host,
-      port: configs.ftp.port,
-      user: configs.ftp.user,
-      pass: res.pass,
-      remotePath: configs.ftp.dest
-    }).on('error', function() {
-      console.log('## Password invalid.');
-      process.exit(true);
-    }));
-  }));
 });
 
 //Gerar CSS minificado 
@@ -222,6 +185,33 @@ gulp.task('minify-js', function() {
   }));
 });
 
+// Desminificar .json
+gulp.task("unminify-json", function () {
+  gulp.src(configs.json.source)
+  .pipe(minifyJSON(minifyJSON.PRETTY))
+  .pipe(gulp.dest(configs.json.dest));
+});
+
+// Minifica .json
+gulp.task("minify-json", function () {
+  gulp.src(configs.json.source)
+  .pipe(minifyJSON(minifyJSON.MINI))
+  .pipe(gulp.dest(configs.json.dest));
+});
+
+// Comprimir imagem
+gulp.task('images', function() {
+  gulp.src(configs.img.source)
+  .pipe(image())
+  .pipe(gulp.dest(configs.img.dest));
+});
+
+/* Deploy Components Bower */
+gulp.task('deploy-vendor', function() {
+  gulp.src(configs.deploy.js).pipe(gulp.dest(configs.js.vendor));
+  gulp.src(configs.deploy.css).pipe(gulp.dest(configs.css.vendor));
+});
+
 // Gerar build
 gulp.task('build', function() {
   gulp.src(configs.build.source, {base: './app/'})
@@ -236,16 +226,24 @@ gulp.task('zip', ['build'], function() {
   .pipe(gulp.dest(configs.zip.dest));
 });
 
-// Desminificar .json
-gulp.task("unminify-json", function () {
-  gulp.src(configs.json.source)
-  .pipe(minifyJSON(minifyJSON.PRETTY))
-  .pipe(gulp.dest(configs.json.dest));
-});
-
-// Minifica .json
-gulp.task("minify-json", function () {
-  gulp.src(configs.json.source)
-  .pipe(minifyJSON(minifyJSON.MINI))
-  .pipe(gulp.dest(configs.json.dest));
+// Transferir via FTP
+gulp.task('ftp', function() {
+  gulp.src('./app/')
+  .pipe(prompt.prompt({
+    type: 'password',
+    name: 'pass',
+    message: 'Please enter your password'
+  }, function(res) {
+    gulp.src(configs.ftp.source, {base: './build'})
+    .pipe(ftp({
+      host: configs.ftp.host,
+      port: configs.ftp.port,
+      user: configs.ftp.user,
+      pass: res.pass,
+      remotePath: configs.ftp.dest
+    }).on('error', function() {
+      console.log('## Password invalid.');
+      process.exit(true);
+    }));
+  }));
 });

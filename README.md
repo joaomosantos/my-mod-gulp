@@ -35,6 +35,30 @@ folder
 // Start BrowserSync (support SSI)
 gulp server
 
+// Compile LESS to CSS
+gulp compiler-less
+
+// Compile SASS to CSS
+gulp compiler-sass
+
+// To assign auto prefixer in CSS
+gulp autoprefixer-css
+
+// Minify css
+gulp minify-css
+
+// Minify css
+gulp minify-js
+
+// Minify Json
+gulp minify-json
+
+// UnMinify Json
+gulp unminify-json
+
+// Compress image
+gulp images
+
 // Deploy packages bower
 gulp deploy-vendor
 
@@ -46,28 +70,4 @@ gulp zip
 
 // Transfer ftp (adjust parameters in gulpfile.js)
 gulp ftp
-
-// Compile LESS to CSS
-gulp compiler-less
-
-// Compile SASS to CSS
-gulp compiler-sass
-
-// Minify css
-gulp minify-css
-
-// Minify css
-gulp minify-js
-
-// Compress image
-gulp images
-
-// Minify .Json
-gulp json-minify
-
-// UnMinify .Json
-gulp json-unminify
-
-// To assign auto prefixer in CSS
-gulp autoprefixer-css
 ```
