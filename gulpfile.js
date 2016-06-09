@@ -12,7 +12,8 @@ concat = require('gulp-concat'),
 rename = require('gulp-rename'),
 ftp = require('gulp-ftp'),
 zip = require('gulp-zip'),
-prompt = require('gulp-prompt');
+prompt = require('gulp-prompt'),
+size = require('gulp-size');
 
 // build configs
 var packageName = "pacote";
@@ -197,6 +198,7 @@ gulp.task('minify-css', function() {
       .pipe(rename(function (path) {
         path.basename += '.min'
       }))
+      .pipe(size({ showFiles: true, showTotal: true }))
       .pipe(gulp.dest(configs.css.minify));
     }));
 });
@@ -214,6 +216,7 @@ gulp.task('minify-js', function() {
       .pipe(rename(function (path) {
         path.basename += '.min'
       }))
+      .pipe(size({ showFiles: true, showTotal: true }))
       .pipe(gulp.dest(configs.js.minify));
     }));
 });
