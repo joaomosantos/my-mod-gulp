@@ -68,15 +68,15 @@ var configs = {
   },
   build: {
     source: [
-      './app/favicon.ico',
-      './app/inc/**/',
-      './app/pdf/**/',
-      './app/images/**/',
-      './app/template/**/',
-      './app/json/**/',
-      './app/css/**/',
-      './app/js/**/',
-      './app/{*.html,*.htm,*.shtm,*.shtml}'
+    './app/favicon.ico',
+    './app/inc/**/',
+    './app/pdf/**/',
+    './app/images/**/',
+    './app/template/**/',
+    './app/json/**/',
+    './app/css/**/',
+    './app/js/**/',
+    './app/{*.html,*.htm,*.shtm,*.shtml}'
     ],
     dest: './build/' + folderName
   },
@@ -86,12 +86,12 @@ var configs = {
   },
   deploy: {
     js: [
-      './bower_components/jquery/dist/jquery.js',
-      './bower_components/modernizr/modernizr.js',
-      './bower_components/respond/src/respond.js'
+    './bower_components/jquery/dist/jquery.js',
+    './bower_components/modernizr/modernizr.js',
+    './bower_components/respond/src/respond.js'
     ],
     css: [
-      './bower_components/normalize-css/normalize.css'
+    './bower_components/normalize-css/normalize.css'
     ]
   }
 };
@@ -160,72 +160,72 @@ gulp.task('autoprefixer-css', function() {
 // Comprimir imagem
 gulp.task('images', function() {
   gulp.src(configs.img.source)
-    .pipe(image())
-    .pipe(gulp.dest(configs.img.dest));
+  .pipe(image())
+  .pipe(gulp.dest(configs.img.dest));
 });
 
 // Transferir via FTP
 gulp.task('ftp', function() {
   gulp.src('./app/')
-    .pipe(prompt.prompt({
-      type: 'password',
-      name: 'pass',
-      message: 'Please enter your password'
-    }, function(res) {
-      gulp.src(configs.ftp.source, {base: './build'})
-        .pipe(ftp({
-          host: configs.ftp.host,
-          port: configs.ftp.port,
-          user: configs.ftp.user,
-          pass: res.pass,
-          remotePath: configs.ftp.dest
-        }).on('error', function() {
-          console.log('## Password invalid.');
-          process.exit(true);
-        }));
+  .pipe(prompt.prompt({
+    type: 'password',
+    name: 'pass',
+    message: 'Please enter your password'
+  }, function(res) {
+    gulp.src(configs.ftp.source, {base: './build'})
+    .pipe(ftp({
+      host: configs.ftp.host,
+      port: configs.ftp.port,
+      user: configs.ftp.user,
+      pass: res.pass,
+      remotePath: configs.ftp.dest
+    }).on('error', function() {
+      console.log('## Password invalid.');
+      process.exit(true);
     }));
+  }));
 });
 
 //Gerar CSS minificado 
 gulp.task('minify-css', function() {
   gulp.src('./app/')
   .pipe(prompt.prompt({
-      type: 'input',
-      name: 'file',
-      message: 'File:'
-    }, function(res) {
-      gulp.src(configs.css.dest + res.file)
-      .pipe(minifyCSS())
-      .pipe(rename(function (path) {
-        path.basename += '.min'
-      }))
-      .pipe(size({ showFiles: true, showTotal: true }))
-      .pipe(gulp.dest(configs.css.minify));
-    }));
+    type: 'input',
+    name: 'file',
+    message: 'File:'
+  }, function(res) {
+    gulp.src(configs.css.dest + res.file)
+    .pipe(minifyCSS())
+    .pipe(rename(function (path) {
+      path.basename += '.min'
+    }))
+    .pipe(size({ showFiles: true, showTotal: true }))
+    .pipe(gulp.dest(configs.css.minify));
+  }));
 });
 
 //Gerar JS minificado 
 gulp.task('minify-js', function() {
   gulp.src('./app/')
   .pipe(prompt.prompt({
-      type: 'input',
-      name: 'file',
-      message: 'File:'
-    }, function(res) {
-      gulp.src(configs.js.dest + res.file)
-      .pipe(minifyJS())
-      .pipe(rename(function (path) {
-        path.basename += '.min'
-      }))
-      .pipe(size({ showFiles: true, showTotal: true }))
-      .pipe(gulp.dest(configs.js.minify));
-    }));
+    type: 'input',
+    name: 'file',
+    message: 'File:'
+  }, function(res) {
+    gulp.src(configs.js.dest + res.file)
+    .pipe(minifyJS())
+    .pipe(rename(function (path) {
+      path.basename += '.min'
+    }))
+    .pipe(size({ showFiles: true, showTotal: true }))
+    .pipe(gulp.dest(configs.js.minify));
+  }));
 });
 
 // Gerar build
 gulp.task('build', function() {
   gulp.src(configs.build.source, {base: './app/'})
-    .pipe(gulp.dest(configs.build.dest));
+  .pipe(gulp.dest(configs.build.dest));
 });
 
 // Compactar build
@@ -239,13 +239,13 @@ gulp.task('zip', ['build'], function() {
 // Desminificar .json
 gulp.task("json-unminify", function () {
   gulp.src(configs.json.source)
-    .pipe(minifyJSON(minifyJSON.PRETTY))
-    .pipe(gulp.dest(configs.json.dest));
+  .pipe(minifyJSON(minifyJSON.PRETTY))
+  .pipe(gulp.dest(configs.json.dest));
 });
 
 // Minifica .json
 gulp.task("json-minify", function () {
   gulp.src(configs.json.source)
-    .pipe(minifyJSON(minifyJSON.MINI))
-    .pipe(gulp.dest(configs.json.dest));
+  .pipe(minifyJSON(minifyJSON.MINI))
+  .pipe(gulp.dest(configs.json.dest));
 });
