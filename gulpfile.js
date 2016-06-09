@@ -231,6 +231,7 @@ gulp.task('build', function() {
 gulp.task('zip', ['build'], function() {
   gulp.src(configs.zip.source, {base: './build'})
   .pipe(zip(packageName+'.zip'))
+  .pipe(size({ showFiles: true, showTotal: false }))
   .pipe(gulp.dest(configs.zip.dest));
 });
 
