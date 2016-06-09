@@ -190,7 +190,7 @@ gulp.task('minify-css', function() {
   .pipe(prompt.prompt({
       type: 'input',
       name: 'file',
-      message: 'Digite o nome do arquivo para minificar Ex: main.css'
+      message: 'File:'
     }, function(res) {
       gulp.src(configs.css.dest + res.file)
       .pipe(minifyCSS())
@@ -207,7 +207,7 @@ gulp.task('minify-js', function() {
   .pipe(prompt.prompt({
       type: 'input',
       name: 'file',
-      message: 'Digite o nome do arquivo para minificar Ex: main.js'
+      message: 'File:'
     }, function(res) {
       gulp.src(configs.js.dest + res.file)
       .pipe(minifyJS())
