@@ -237,14 +237,14 @@ gulp.task('zip', ['build'], function() {
 });
 
 // Desminificar .json
-gulp.task("json-unminify", function () {
+gulp.task("unminify-json", function () {
   gulp.src(configs.json.source)
   .pipe(minifyJSON(minifyJSON.PRETTY))
   .pipe(gulp.dest(configs.json.dest));
 });
 
 // Minifica .json
-gulp.task("json-minify", function () {
+gulp.task("minify-json", function () {
   gulp.src(configs.json.source)
   .pipe(minifyJSON(minifyJSON.MINI))
   .pipe(gulp.dest(configs.json.dest));
