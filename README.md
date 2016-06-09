@@ -1,6 +1,6 @@
 # My Modulo Gulp
 
-### Preinstall / Global
+### Global / Preinstall
 
 ```js
 npm install -g bower
