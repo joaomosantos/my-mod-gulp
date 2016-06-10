@@ -168,7 +168,6 @@ gulp.task('minify-css', function() {
       file = regexMinify.test(path.basename);
       if(!file) { path.basename += '.min' }
     }))
-    .pipe(size({ showFiles: true, showTotal: true }))
     .pipe(gulp.dest(correntPath[0]));
   }));
 });
@@ -189,7 +188,6 @@ gulp.task('minify-js', function() {
       file = regexMinify.test(path.basename);
       if(!file) { path.basename += '.min' }
     }))
-    .pipe(size({ showFiles: true, showTotal: true }))
     .pipe(gulp.dest(correntPath[0]));
   }));
 });
