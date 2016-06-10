@@ -1,20 +1,11 @@
-var gulp = require('gulp'),
-menu = require("gulp-menu"),
-browserSync = require('browser-sync'),
-ssi = require('browsersync-ssi'),
-less = require('gulp-less'),
-sass = require('gulp-sass'),
-autoprefixer = require('gulp-autoprefixer'),
-minifyCSS = require('gulp-minify-css'),
-minifyJS = require('gulp-uglify'),
-minifyJSON = require("gulp-json-fmt"),
-image = require('gulp-image'),
-concat = require('gulp-concat'),
-rename = require('gulp-rename'),
-ftp = require('gulp-ftp'),
-zip = require('gulp-zip'),
-prompt = require('gulp-prompt'),
-size = require('gulp-size');
+var gulp = require('gulp');
+var browserSync = require('browser-sync'), ssi = require('browsersync-ssi');
+var plugins = require('gulp-load-plugins')({
+  rename: {
+    'gulp-minify-css': 'minifyCSS',
+    'gulp-json-fmt': 'minifyJSON'
+  }
+});
 
 // build configs
 var packageName = "pacote";
@@ -121,8 +112,8 @@ gulp.task('server', function() {
 /* Compilar LESS */
 gulp.task('compiler-less', function() {
   gulp.src(configs.less.source)
-  .pipe(less())
-  .pipe(autoprefixer({
+  .pipe(plugins.less())
+  .pipe(plugins.autoprefixer({
     browsers: ['last 5 versions'],
     cascade: false
   }))
@@ -133,8 +124,8 @@ gulp.task('compiler-less', function() {
 /* Compilar SASS */
 gulp.task('compiler-sass', function() {
   gulp.src(configs.sass.source)
-  .pipe(sass())
-  .pipe(autoprefixer({
+  .pipe(plugins.sass())
+  .pipe(plugins.autoprefixer({
     browsers: ['last 5 versions'],
     cascade: false
   }))
@@ -145,7 +136,7 @@ gulp.task('compiler-sass', function() {
 // Adicionar auto prefixo
 gulp.task('autoprefixer-css', function() {
   gulp.src(configs.css.source)
-  .pipe(autoprefixer({
+  .pipe(plugins.autoprefixer({
     browsers: ['last 5 versions'],
     cascade: false
   }))
@@ -155,7 +146,7 @@ gulp.task('autoprefixer-css', function() {
 //Gerar CSS minificado 
 gulp.task('minify-css', function() {
   gulp.src('./app/')
-  .pipe(prompt.prompt({
+  .pipe(plugins.prompt.prompt({
     type: 'input',
     name: 'file',
     message: 'File:'
@@ -163,8 +154,8 @@ gulp.task('minify-css', function() {
     correntFile = configs.css.dest + res.file;
     correntPath = regexCorrentPath.exec(correntFile);
     gulp.src(correntFile)
-    .pipe(minifyCSS())
-    .pipe(rename(function (path) {
+    .pipe(plugins.minifyCSS())
+    .pipe(plugins.rename(function (path) {
       file = regexMinify.test(path.basename);
       if(!file) { path.basename += '.min' }
     }))
@@ -175,7 +166,7 @@ gulp.task('minify-css', function() {
 //Gerar JS minificado 
 gulp.task('minify-js', function() {
   gulp.src('./app/')
-  .pipe(prompt.prompt({
+  .pipe(plugins.prompt.prompt({
     type: 'input',
     name: 'file',
     message: 'File:'
@@ -183,8 +174,8 @@ gulp.task('minify-js', function() {
     correntFile = configs.js.dest + res.file;
     correntPath = regexCorrentPath.exec(correntFile);
     gulp.src(correntFile)
-    .pipe(minifyJS())
-    .pipe(rename(function (path) {
+    .pipe(plugins.uglify())
+    .pipe(plugins.rename(function (path) {
       file = regexMinify.test(path.basename);
       if(!file) { path.basename += '.min' }
     }))
@@ -195,21 +186,21 @@ gulp.task('minify-js', function() {
 // Desminificar .json
 gulp.task("unminify-json", function () {
   gulp.src(configs.json.source)
-  .pipe(minifyJSON(minifyJSON.PRETTY))
+  .pipe(plugins.minifyJSON(plugins.minifyJSON.PRETTY))
   .pipe(gulp.dest(configs.json.dest));
 });
 
 // Minifica .json
 gulp.task("minify-json", function () {
   gulp.src(configs.json.source)
-  .pipe(minifyJSON(minifyJSON.MINI))
+  .pipe(plugins.minifyJSON(plugins.minifyJSON.MINI))
   .pipe(gulp.dest(configs.json.dest));
 });
 
 // Comprimir imagem
 gulp.task('images', function() {
   gulp.src(configs.img.source)
-  .pipe(image())
+  .pipe(plugins.image())
   .pipe(gulp.dest(configs.img.dest));
 });
 
@@ -228,21 +219,21 @@ gulp.task('build', function() {
 // Compactar build
 gulp.task('zip', ['build'], function() {
   gulp.src(configs.zip.source, {base: './build'})
-  .pipe(zip(packageName+'.zip'))
-  .pipe(size({ showFiles: true, showTotal: false }))
+  .pipe(plugins.zip(packageName+'.zip'))
+  .pipe(plugins.size({ showFiles: true, showTotal: false }))
   .pipe(gulp.dest(configs.zip.dest));
 });
 
 // Transferir via FTP
 gulp.task('ftp', ['build'], function() {
   gulp.src('./app/')
-  .pipe(prompt.prompt({
+  .pipe(plugins.prompt.prompt({
     type: 'password',
     name: 'pass',
     message: 'Please enter your password'
   }, function(res) {
     gulp.src(configs.ftp.source, {base: './build'})
-    .pipe(ftp({
+    .pipe(plugins.ftp({
       host: configs.ftp.host,
       port: configs.ftp.port,
       user: configs.ftp.user,
