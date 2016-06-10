@@ -20,6 +20,9 @@ size = require('gulp-size');
 var packageName = "pacote";
 var folderName = "dev";
 
+// Regex Corrent Path
+var regexCorrentPath = /\.\/.+\b\//g;
+
 var configs = {
   json: {
     source: './app/json/*.json',
@@ -36,13 +39,11 @@ var configs = {
   css: {
     source: './app/css/*.css',
     dest: './app/css/',
-    minify: './app/css/minified/',
     vendor: './app/css/vendor/'
   },
   js: {
     source: './app/js/*.js',
     dest: './app/js/',
-    minify: './app/js/minified/',
     vendor: './app/js/vendor/'
   },
   sync: {
@@ -157,13 +158,15 @@ gulp.task('minify-css', function() {
     name: 'file',
     message: 'File:'
   }, function(res) {
-    gulp.src(configs.css.dest + res.file)
+    correntFile = configs.css.dest + res.file;
+    correntPath = regexCorrentPath.exec(correntFile);
+    gulp.src(correntFile)
     .pipe(minifyCSS())
     .pipe(rename(function (path) {
       path.basename += '.min'
     }))
     .pipe(size({ showFiles: true, showTotal: true }))
-    .pipe(gulp.dest(configs.css.minify));
+    .pipe(gulp.dest(correntPath[0]));
   }));
 });
 
@@ -175,13 +178,15 @@ gulp.task('minify-js', function() {
     name: 'file',
     message: 'File:'
   }, function(res) {
-    gulp.src(configs.js.dest + res.file)
+    correntFile = configs.js.dest + res.file;
+    correntPath = regexCorrentPath.exec(correntFile);
+    gulp.src(correntFile)
     .pipe(minifyJS())
     .pipe(rename(function (path) {
       path.basename += '.min'
     }))
     .pipe(size({ showFiles: true, showTotal: true }))
-    .pipe(gulp.dest(configs.js.minify));
+    .pipe(gulp.dest(correntPath[0]));
   }));
 });
 
