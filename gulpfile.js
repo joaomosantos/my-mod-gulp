@@ -22,6 +22,8 @@ var folderName = "dev";
 
 // Regex Corrent Path
 var regexCorrentPath = /\.\/.+\b\//g;
+// Regex Minify js/css
+var regexMinify = /\.min/g;
 
 var configs = {
   json: {
@@ -163,7 +165,8 @@ gulp.task('minify-css', function() {
     gulp.src(correntFile)
     .pipe(minifyCSS())
     .pipe(rename(function (path) {
-      path.basename += '.min'
+      file = regexMinify.test(path.basename);
+      if(!file) { path.basename += '.min' }
     }))
     .pipe(size({ showFiles: true, showTotal: true }))
     .pipe(gulp.dest(correntPath[0]));
@@ -183,7 +186,8 @@ gulp.task('minify-js', function() {
     gulp.src(correntFile)
     .pipe(minifyJS())
     .pipe(rename(function (path) {
-      path.basename += '.min'
+      file = regexMinify.test(path.basename);
+      if(!file) { path.basename += '.min' }
     }))
     .pipe(size({ showFiles: true, showTotal: true }))
     .pipe(gulp.dest(correntPath[0]));
