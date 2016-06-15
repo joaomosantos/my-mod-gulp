@@ -143,7 +143,7 @@ gulp.task('autoprefixer-css', function() {
   .pipe(gulp.dest(configs.css.dest));
 });
 
-//Gerar CSS minificado 
+//Gerar CSS minificado
 gulp.task('minify-css', function() {
   gulp.src('./app/')
   .pipe(plugins.prompt.prompt({
@@ -163,7 +163,7 @@ gulp.task('minify-css', function() {
   }));
 });
 
-//Gerar JS minificado 
+//Gerar JS minificado
 gulp.task('minify-js', function() {
   gulp.src('./app/')
   .pipe(plugins.prompt.prompt({
