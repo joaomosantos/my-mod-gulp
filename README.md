@@ -25,6 +25,7 @@ folder
   |__bower.json
   |__.bowerrc
   |__bower_components
+  |__.editorconfig
   |__app
       |__index.html //or index.shtm
       |__inc //includes SSI
