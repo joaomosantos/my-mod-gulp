@@ -28,6 +28,7 @@ var configs = {
   },
   sass: {
     source: './app/css/sass/*.scss',
+    main: './app/css/sass/main.scss',
     dest: './app/css/'
   },
   css: {
@@ -124,7 +125,7 @@ gulp.task('compiler-less', function() {
 
 /* Compilar SASS */
 gulp.task('compiler-sass', function() {
-  gulp.src(configs.sass.source)
+  gulp.src(configs.sass.main)
   .pipe(plugins.sass())
   .pipe(plugins.autoprefixer({
     browsers: ['last 5 versions'],
