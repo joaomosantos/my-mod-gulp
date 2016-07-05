@@ -23,6 +23,7 @@ var configs = {
   },
   less: {
     source: './app/css/less/*.less',
+    main: './app/css/less/main.less',
     dest: './app/css/'
   },
   sass: {
@@ -111,7 +112,7 @@ gulp.task('server', function() {
 
 /* Compilar LESS */
 gulp.task('compiler-less', function() {
-  gulp.src(configs.less.source)
+  gulp.src(configs.less.main)
   .pipe(plugins.less())
   .pipe(plugins.autoprefixer({
     browsers: ['last 5 versions'],
