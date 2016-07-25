@@ -106,7 +106,7 @@ gulp.task('server', function() {
 
 /* Importar dependencia bower */
 gulp.task('bower', function() {
-  gulp.src([configs.html.main, configs.html.inc])
+  gulp.src(configs.html.main)
   .pipe(wiredep({
     directory: './bower_components/',
     exclude: ['modernizr', 'respond']
