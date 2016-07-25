@@ -44,6 +44,9 @@ folder
 // Start BrowserSync (support SSI)
 gulp server
 
+// Import dependency bower
+gulp bower
+
 // Compile LESS to CSS
 gulp compiler-less
 
@@ -68,14 +71,11 @@ gulp unminify-json
 // Compress image
 gulp images
 
-// Deploy packages bower
-gulp deploy-vendor
+// Compact build
+gulp zip
 
 // Generate build
 gulp build
-
-// Compact build
-gulp zip
 
 // Transfer ftp (adjust parameters in gulpfile.js)
 gulp ftp

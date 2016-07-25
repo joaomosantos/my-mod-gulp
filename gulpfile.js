@@ -18,9 +18,15 @@ var regexCorrentPath = /\.\/.+\b\//g;
 var regexMinify = /\.min/g;
 
 var configs = {
-  json: {
-    source: './app/json/*.json',
-    dest: './app/json/',
+  sync: {
+    ext: [
+    './app/{*.html,*.htm,*.shtm,*.shtml}',
+    './app/inc/**/.',
+    './app/css/**/*.css',
+    './app/js/**/*.js',
+    './app/template/*.mst',
+    './app/json/*.json'
+    ]
   },
   html: {
     main: './app/{*.html,*.htm,*.shtm,*.shtml}',
@@ -45,19 +51,17 @@ var configs = {
     source: './app/js/*.js',
     dest: './app/js/'
   },
-  sync: {
-    ext: [
-    './app/{*.html,*.htm,*.shtm,*.shtml}',
-    './app/inc/**/.',
-    './app/css/**/*.css',
-    './app/js/**/*.js',
-    './app/template/*.mst',
-    './app/json/*.json'
-    ]
+  json: {
+    source: './app/json/*.json',
+    dest: './app/json/',
   },
   img: {
     source: './app/images/**/*',
     dest: './app/images/'
+  },
+  zip: {
+    source: './build/' + folderName + '/**/.',
+    dest: './build/'
   },
   ftp: {
     source: './build/' + folderName + '/**/.',
@@ -80,13 +84,7 @@ var configs = {
     ],
     dest: './build/' + folderName
   },
-  zip: {
-    source: './build/' + folderName + '/**/.',
-    dest: './build/'
-  }
 };
-
-gulp.task('default', function() { plugins.menu(this); });
 
 /* Sincronizar browser*/
 gulp.task('server', function() {
@@ -104,6 +102,16 @@ gulp.task('server', function() {
   gulp.watch(configs.sass.source, ['compiler-sass'], browserSync.reload);
   gulp.watch(configs.sync.ext, browserSync.reload);
   gulp.watch('bower.json', ['bower'], browserSync.reload);
+});
+
+/* Importar dependencia bower */
+gulp.task('bower', function() {
+  gulp.src([configs.html.main, configs.html.inc])
+  .pipe(wiredep({
+    directory: './bower_components/',
+    exclude: ['modernizr', 'respond']
+  }))
+  .pipe(gulp.dest(configs.html.dest));
 });
 
 /* Compilar LESS */
@@ -201,27 +209,18 @@ gulp.task('images', function() {
   .pipe(gulp.dest(configs.img.dest));
 });
 
-gulp.task('bower', function() {
-  gulp.src([configs.html.main, configs.html.inc])
-  .pipe(wiredep({
-    directory: './bower_components/',
-    exclude: ['modernizr', 'respond']
-  }))
-  .pipe(gulp.dest(configs.html.dest));
-});
-
-// Gerar build
-gulp.task('build', function() {
-  gulp.src(configs.build.source, {base: './app/'})
-  .pipe(gulp.dest(configs.build.dest));
-});
-
 // Compactar build
 gulp.task('zip', ['build'], function() {
   gulp.src(configs.zip.source, {base: './build'})
   .pipe(plugins.zip(packageName+'.zip'))
   .pipe(plugins.size({ showFiles: true, showTotal: false }))
   .pipe(gulp.dest(configs.zip.dest));
+});
+
+// Gerar build
+gulp.task('build', function() {
+  gulp.src(configs.build.source, {base: './app/'})
+  .pipe(gulp.dest(configs.build.dest));
 });
 
 // Transferir via FTP
@@ -245,3 +244,5 @@ gulp.task('ftp', ['build'], function() {
     }));
   }));
 });
+
+gulp.task('default', function() { plugins.menu(this); });
