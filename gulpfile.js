@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var wiredep = require('wiredep').stream;
 var browserSync = require('browser-sync'), ssi = require('browsersync-ssi');
 var plugins = require('gulp-load-plugins')({
   rename: {
@@ -20,6 +21,11 @@ var configs = {
   json: {
     source: './app/json/*.json',
     dest: './app/json/',
+  },
+  html: {
+    main: './app/{*.html,*.htm,*.shtm,*.shtml}',
+    inc: './app/inc/**/{*.html,*.htm,*.shtm,*.shtml}',
+    dest: './app/'
   },
   less: {
     source: './app/css/less/*.less',
@@ -109,6 +115,7 @@ gulp.task('server', function() {
   gulp.watch(configs.less.source, ['compiler-less'], browserSync.reload);
   gulp.watch(configs.sass.source, ['compiler-sass'], browserSync.reload);
   gulp.watch(configs.sync.ext, browserSync.reload);
+  gulp.watch('bower.json', ['bower'], browserSync.reload);
 });
 
 /* Compilar LESS */
@@ -210,6 +217,15 @@ gulp.task('images', function() {
 gulp.task('deploy-vendor', function() {
   gulp.src(configs.deploy.js).pipe(gulp.dest(configs.js.vendor));
   gulp.src(configs.deploy.css).pipe(gulp.dest(configs.css.vendor));
+});
+
+gulp.task('bower', function() {
+  gulp.src([configs.html.main, configs.html.inc])
+  .pipe(wiredep({
+    directory: './bower_components/',
+    exclude: ['modernizr', 'respond']
+  }))
+  .pipe(gulp.dest(configs.html.dest));
 });
 
 // Gerar build
