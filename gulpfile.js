@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var wiredep = require('wiredep').stream;
 var browserSync = require('browser-sync'), ssi = require('browsersync-ssi');
-var plugins = require('gulp-load-plugins')({
+var $ = require('gulp-load-plugins')({
   rename: {
     'gulp-minify-css': 'minifyCSS',
     'gulp-json-fmt': 'minifyJSON'
@@ -117,8 +117,8 @@ gulp.task('bower', function() {
 /* Compilar LESS */
 gulp.task('compiler-less', function() {
   gulp.src(configs.less.main)
-  .pipe(plugins.less())
-  .pipe(plugins.autoprefixer({
+  .pipe($.less())
+  .pipe($.autoprefixer({
     browsers: ['last 5 versions'],
     cascade: false
   }))
@@ -129,8 +129,8 @@ gulp.task('compiler-less', function() {
 /* Compilar SASS */
 gulp.task('compiler-sass', function() {
   gulp.src(configs.sass.main)
-  .pipe(plugins.sass())
-  .pipe(plugins.autoprefixer({
+  .pipe($.sass())
+  .pipe($.autoprefixer({
     browsers: ['last 5 versions'],
     cascade: false
   }))
@@ -141,7 +141,7 @@ gulp.task('compiler-sass', function() {
 // Adicionar auto prefixo
 gulp.task('autoprefixer-css', function() {
   gulp.src(configs.css.source)
-  .pipe(plugins.autoprefixer({
+  .pipe($.autoprefixer({
     browsers: ['last 5 versions'],
     cascade: false
   }))
@@ -151,7 +151,7 @@ gulp.task('autoprefixer-css', function() {
 //Gerar CSS minificado
 gulp.task('minify-css', function() {
   gulp.src('./app/')
-  .pipe(plugins.prompt.prompt({
+  .pipe($.prompt.prompt({
     type: 'input',
     name: 'file',
     message: 'File:'
@@ -159,8 +159,8 @@ gulp.task('minify-css', function() {
     correntFile = configs.css.dest + res.file;
     correntPath = regexCorrentPath.exec(correntFile);
     gulp.src(correntFile)
-    .pipe(plugins.minifyCSS())
-    .pipe(plugins.rename(function (path) {
+    .pipe($.minifyCSS())
+    .pipe($.rename(function (path) {
       file = regexMinify.test(path.basename);
       if(!file) { path.basename += '.min' }
     }))
@@ -171,7 +171,7 @@ gulp.task('minify-css', function() {
 //Gerar JS minificado
 gulp.task('minify-js', function() {
   gulp.src('./app/')
-  .pipe(plugins.prompt.prompt({
+  .pipe($.prompt.prompt({
     type: 'input',
     name: 'file',
     message: 'File:'
@@ -179,8 +179,8 @@ gulp.task('minify-js', function() {
     correntFile = configs.js.dest + res.file;
     correntPath = regexCorrentPath.exec(correntFile);
     gulp.src(correntFile)
-    .pipe(plugins.uglify())
-    .pipe(plugins.rename(function (path) {
+    .pipe($.uglify())
+    .pipe($.rename(function (path) {
       file = regexMinify.test(path.basename);
       if(!file) { path.basename += '.min' }
     }))
@@ -191,29 +191,29 @@ gulp.task('minify-js', function() {
 // Desminificar .json
 gulp.task("unminify-json", function () {
   gulp.src(configs.json.source)
-  .pipe(plugins.minifyJSON(plugins.minifyJSON.PRETTY))
+  .pipe($.minifyJSON($.minifyJSON.PRETTY))
   .pipe(gulp.dest(configs.json.dest));
 });
 
 // Minifica .json
 gulp.task("minify-json", function () {
   gulp.src(configs.json.source)
-  .pipe(plugins.minifyJSON(plugins.minifyJSON.MINI))
+  .pipe($.minifyJSON($.minifyJSON.MINI))
   .pipe(gulp.dest(configs.json.dest));
 });
 
 // Comprimir imagem
 gulp.task('images', function() {
   gulp.src(configs.img.source)
-  .pipe(plugins.image())
+  .pipe($.image())
   .pipe(gulp.dest(configs.img.dest));
 });
 
 // Compactar build
 gulp.task('zip', ['build'], function() {
   gulp.src(configs.zip.source, {base: './build'})
-  .pipe(plugins.zip(packageName+'.zip'))
-  .pipe(plugins.size({ showFiles: true, showTotal: false }))
+  .pipe($.zip(packageName+'.zip'))
+  .pipe($.size({ showFiles: true, showTotal: false }))
   .pipe(gulp.dest(configs.zip.dest));
 });
 
@@ -226,13 +226,13 @@ gulp.task('build', function() {
 // Transferir via FTP
 gulp.task('ftp', ['build'], function() {
   gulp.src('./app/')
-  .pipe(plugins.prompt.prompt({
+  .pipe($.prompt.prompt({
     type: 'password',
     name: 'pass',
     message: 'Please enter your password'
   }, function(res) {
     gulp.src(configs.ftp.source, {base: './build'})
-    .pipe(plugins.ftp({
+    .pipe($.ftp({
       host: configs.ftp.host,
       port: configs.ftp.port,
       user: configs.ftp.user,
@@ -245,4 +245,4 @@ gulp.task('ftp', ['build'], function() {
   }));
 });
 
-gulp.task('default', function() { plugins.menu(this); });
+gulp.task('default', function() { $.menu(this); });
