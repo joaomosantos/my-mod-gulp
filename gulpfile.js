@@ -20,7 +20,7 @@ var regexMinify = /\.min/g;
 var configs = {
   sync: {
     ext: [
-    './app/{*.html,*.htm,*.shtm,*.shtml}',
+    './app/*.{html, htm, shtm, shtml}',
     './app/inc/**/.',
     './app/css/**/*.css',
     './app/js/**/*.js',
@@ -29,8 +29,8 @@ var configs = {
     ]
   },
   html: {
-    main: './app/{*.html,*.htm,*.shtm,*.shtml}',
-    inc: './app/inc/**/{*.html,*.htm,*.shtm,*.shtml}',
+    main: './app/*.{html, htm, shtm, shtml}',
+    inc: './app/inc/**/*.{html, htm, shtm, shtml}',
     dest: './app/'
   },
   less: {
@@ -80,7 +80,7 @@ var configs = {
     './app/json/**/',
     './app/css/**/',
     './app/js/**/',
-    './app/{*.html,*.htm,*.shtm,*.shtml}'
+    './app/*.{html, htm, shtm, shtml}'
     ],
     dest: './build/' + folderName
   },
