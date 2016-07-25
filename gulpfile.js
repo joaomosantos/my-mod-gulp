@@ -118,13 +118,6 @@ gulp.task('bower', function() {
   .pipe(gulp.dest(configs.html.dest));
 });
 
-// Deploy vendor bower
-gulp.task('deploy-vendor', function() {
-  gulp.src(configs.html.main)
-  .pipe($.useref())
-  .pipe(gulp.dest(configs.html.dest));
-});
-
 /* Compilar LESS */
 gulp.task('compiler-less', function() {
   gulp.src(configs.less.main)
@@ -231,6 +224,7 @@ gulp.task('zip', ['build'], function() {
 // Gerar build
 gulp.task('build', function() {
   gulp.src(configs.build.source, {base: './app/'})
+  .pipe($.useref())
   .pipe(gulp.dest(configs.build.dest));
 });
 

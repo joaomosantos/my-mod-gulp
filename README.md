@@ -47,9 +47,6 @@ gulp server
 // Import dependency bower
 gulp bower
 
-// Deploy dependency bower
-gulp deploy-vendor
-
 // Compile LESS to CSS
 gulp compiler-less
 
