@@ -86,7 +86,7 @@ var configs = {
   }
 };
 
-gulp.task('default', function() { menu(this); });
+gulp.task('default', function() { plugins.menu(this); });
 
 /* Sincronizar browser*/
 gulp.task('server', function() {
