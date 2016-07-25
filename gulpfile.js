@@ -20,7 +20,7 @@ var regexMinify = /\.min/g;
 var configs = {
   sync: {
     ext: [
-    './app/*.{html, htm, shtm, shtml}',
+    './app/*.{html,htm,shtm,shtml}',
     './app/inc/**/.',
     './app/css/**/*.css',
     './app/js/**/*.js',
@@ -29,8 +29,8 @@ var configs = {
     ]
   },
   html: {
-    main: './app/*.{html, htm, shtm, shtml}',
-    inc: './app/inc/**/*.{html, htm, shtm, shtml}',
+    main: './app/*.{html,htm,shtm,shtml}',
+    inc: './app/inc/**/*.{html,htm,shtm,shtml}',
     dest: './app/'
   },
   less: {
@@ -80,7 +80,7 @@ var configs = {
     './app/json/**/',
     './app/css/**/',
     './app/js/**/',
-    './app/*.{html, htm, shtm, shtml}'
+    './app/*.{html,htm,shtm,shtml}'
     ],
     dest: './build/' + folderName
   },
@@ -90,10 +90,13 @@ var configs = {
 gulp.task('server', function() {
   browserSync({
     server: {
-      baseDir: './app/',
+      baseDir: 'app',
       index: 'index.html',
+      routes: {
+        '/bower_components': 'bower_components'
+      },
       middleware: ssi({
-        baseDir: './app/',
+        baseDir: 'app',
         ext: '.shtm'
       })
     }
@@ -108,9 +111,17 @@ gulp.task('server', function() {
 gulp.task('bower', function() {
   gulp.src(configs.html.main)
   .pipe(wiredep({
-    directory: './bower_components/',
+    directory: 'bower_components',
     exclude: ['modernizr', 'respond']
+    //ignorePath: /^(\.\.\/)*\.\.\//
   }))
+  .pipe(gulp.dest(configs.html.dest));
+});
+
+// Deploy vendor bower
+gulp.task('deploy-vendor', function() {
+  gulp.src(configs.html.main)
+  .pipe($.useref())
   .pipe(gulp.dest(configs.html.dest));
 });
 
