@@ -39,13 +39,11 @@ var configs = {
   },
   css: {
     source: './app/css/*.css',
-    dest: './app/css/',
-    vendor: './app/css/vendor/'
+    dest: './app/css/'
   },
   js: {
     source: './app/js/*.js',
-    dest: './app/js/',
-    vendor: './app/js/vendor/'
+    dest: './app/js/'
   },
   sync: {
     ext: [
@@ -85,16 +83,6 @@ var configs = {
   zip: {
     source: './build/' + folderName + '/**/.',
     dest: './build/'
-  },
-  deploy: {
-    js: [
-    './bower_components/jquery/dist/jquery.js',
-    './bower_components/modernizr/modernizr.js',
-    './bower_components/respond/src/respond.js'
-    ],
-    css: [
-    './bower_components/normalize-css/normalize.css'
-    ]
   }
 };
 
@@ -211,12 +199,6 @@ gulp.task('images', function() {
   gulp.src(configs.img.source)
   .pipe(plugins.image())
   .pipe(gulp.dest(configs.img.dest));
-});
-
-/* Deploy Components Bower */
-gulp.task('deploy-vendor', function() {
-  gulp.src(configs.deploy.js).pipe(gulp.dest(configs.js.vendor));
-  gulp.src(configs.deploy.css).pipe(gulp.dest(configs.css.vendor));
 });
 
 gulp.task('bower', function() {
