@@ -11,6 +11,7 @@ var $ = require('gulp-load-plugins')({
 // build configs
 var packageName = "pacote";
 var folderName = "dev";
+var build = "./build/" + folderName;
 
 // Regex Corrent Path
 var regexCorrentPath = /\.\/.+\b\//g;
@@ -64,11 +65,11 @@ var configs = {
     dest: './app/images/'
   },
   zip: {
-    source: './build/' + folderName + '/**/.',
+    source: build + '/**/.',
     dest: './build/'
   },
   ftp: {
-    source: './build/' + folderName + '/**/.',
+    source: build + '/**/.',
     host: '',
     user: '',
     port: '21',
@@ -77,16 +78,15 @@ var configs = {
   build: {
     source: [
     './app/favicon.ico',
-    './app/inc/**/',
     './app/pdf/**/',
     './app/images/**/',
     './app/template/**/',
     './app/json/**/',
     './app/css/**/',
     './app/js/**/',
-    './app/*.{html,htm,shtm,shtml}'
     ],
-    dest: './build/' + folderName
+    inc: build + '/inc/',
+    dest: build
   },
 };
 
@@ -226,10 +226,18 @@ gulp.task('zip', ['build'], function() {
 });
 
 // Gerar build
-gulp.task('build', function() {
+gulp.task('build', ['vendor'], function() {
   gulp.src(configs.build.source, {base: './app/'})
+  .pipe(gulp.dest(configs.build.dest));
+});
+
+gulp.task('vendor', function() {
+  gulp.src(configs.html.main)
   .pipe($.useref())
   .pipe(gulp.dest(configs.build.dest));
+  gulp.src(configs.html.inc)
+  .pipe($.useref())
+  .pipe(gulp.dest(configs.build.inc));
 });
 
 // Transferir via FTP
