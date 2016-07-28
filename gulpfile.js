@@ -195,13 +195,6 @@ gulp.task('minify-js', function() {
   }));
 });
 
-// Desminificar .json
-gulp.task("unminify-json", function () {
-  gulp.src(configs.json.source)
-  .pipe($.minifyJSON($.minifyJSON.PRETTY))
-  .pipe(gulp.dest(configs.json.dest));
-});
-
 // Minifica .json
 gulp.task("minify-json", function () {
   gulp.src(configs.json.source)
