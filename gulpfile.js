@@ -61,7 +61,7 @@ var configs = {
   },
   img: {
     source: './app/images/**/*',
-    dest: './app/images/'
+    dest: folderName + '/images/'
   },
   zip: {
     source: folderName + '/**/.',
@@ -90,7 +90,8 @@ var configs = {
   },
 };
 
-/* Sincronizar browser*/
+gulp.task('default', function() {});
+
 gulp.task('server', function() {
   browserSync({
     server: {
@@ -111,7 +112,6 @@ gulp.task('server', function() {
   gulp.watch('bower.json', ['bower'], browserSync.reload);
 });
 
-/* Importar dependencia bower */
 gulp.task('bower', function() {
   gulp.src(configs.html.source, {base: './app'})
   .pipe(wiredep({
@@ -122,7 +122,6 @@ gulp.task('bower', function() {
   .pipe(gulp.dest(configs.html.dest));
 });
 
-/* Compilar LESS */
 gulp.task('compiler-less', function() {
   gulp.src(configs.less.main)
   .pipe($.less())
@@ -134,7 +133,6 @@ gulp.task('compiler-less', function() {
   .pipe(browserSync.stream());
 });
 
-/* Compilar SASS */
 gulp.task('compiler-sass', function() {
   gulp.src(configs.sass.main)
   .pipe($.sass())
@@ -146,7 +144,6 @@ gulp.task('compiler-sass', function() {
   .pipe(browserSync.stream());
 });
 
-//Gerar CSS minificado
 gulp.task('minify-css', function() {
   gulp.src('./app/')
   .pipe($.prompt.prompt({
@@ -166,7 +163,6 @@ gulp.task('minify-css', function() {
   }));
 });
 
-//Gerar JS minificado
 gulp.task('minify-js', function() {
   gulp.src('./app/')
   .pipe($.prompt.prompt({
@@ -186,21 +182,12 @@ gulp.task('minify-js', function() {
   }));
 });
 
-// Minifica .json
 gulp.task("minify-json", function () {
   gulp.src(configs.json.source)
   .pipe($.minifyJSON($.minifyJSON.MINI))
   .pipe(gulp.dest(configs.json.dest));
 });
 
-// Comprimir imagem
-gulp.task('images', function() {
-  gulp.src(configs.img.source)
-  .pipe($.image())
-  .pipe(gulp.dest(configs.img.dest));
-});
-
-// Compactar build
 gulp.task('zip', ['build'], function() {
   gulp.src(configs.zip.source, {base: './build'})
   .pipe($.zip(packageName+'.zip'))
@@ -208,8 +195,18 @@ gulp.task('zip', ['build'], function() {
   .pipe(gulp.dest(configs.zip.dest));
 });
 
-// Gerar build
-gulp.task('build', ['vendor'], function() {
+gulp.task('ftp', function() {
+  return gulp.src(configs.ftp.source)
+  .pipe($.ftp({
+    host: configs.ftp.host,
+    port: configs.ftp.port,
+    user: configs.ftp.user,
+    pass: configs.ftp.pass,
+    remotePath: configs.ftp.dest
+  }));
+});
+
+gulp.task('build', ['vendor', 'images'], function() {
   gulp.src(configs.build.source, {base: './app/'})
   .pipe(gulp.dest(configs.build.dest));
 });
@@ -223,16 +220,8 @@ gulp.task('vendor', function() {
   .pipe(gulp.dest(configs.build.inc));
 });
 
-// Transferir via FTP
-gulp.task('ftp', function() {
-  return gulp.src(configs.ftp.source)
-  .pipe($.ftp({
-    host: configs.ftp.host,
-    port: configs.ftp.port,
-    user: configs.ftp.user,
-    pass: configs.ftp.pass,
-    remotePath: configs.ftp.dest
-  }));
+gulp.task('images', function() {
+  gulp.src(configs.img.source)
+  .pipe($.imagemin())
+  .pipe(gulp.dest(configs.img.dest));
 });
-
-gulp.task('default', function() {});
