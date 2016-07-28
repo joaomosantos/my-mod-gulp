@@ -156,10 +156,6 @@ gulp.task('minify-css', function() {
     correntPath = regexCorrentPath.exec(correntFile);
     gulp.src(correntFile)
     .pipe($.minifyCSS())
-    .pipe($.rename(function (path) {
-      file = regexMinify.test(path.basename);
-      if(!file) { path.basename += '.min' }
-    }))
     .pipe(gulp.dest(correntPath[0]));
   }));
 });
@@ -175,10 +171,6 @@ gulp.task('minify-js', function() {
     correntPath = regexCorrentPath.exec(correntFile);
     gulp.src(correntFile)
     .pipe($.uglify())
-    .pipe($.rename(function (path) {
-      file = regexMinify.test(path.basename);
-      if(!file) { path.basename += '.min' }
-    }))
     .pipe(gulp.dest(correntPath[0]));
   }));
 });
