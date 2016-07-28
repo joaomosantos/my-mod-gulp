@@ -21,7 +21,7 @@ var configs = {
   sync: {
     ext: [
     './app/*.{html,htm,shtm,shtml}',
-    './app/inc/**/.',
+    './app/inc/**/*.{html,htm,shtm,shtml}',
     './app/css/**/*.css',
     './app/js/**/*.js',
     './app/template/*.mst',
