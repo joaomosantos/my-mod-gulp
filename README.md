@@ -65,6 +65,9 @@ gulp images
 // Generate build
 gulp build
 
+// Start server (build)
+gulp server:build
+
 // Compact build
 gulp zip
 

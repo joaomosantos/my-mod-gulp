@@ -113,6 +113,19 @@ gulp.task('server', function() {
   gulp.watch('bower.json', ['bower'], browserSync.reload);
 });
 
+gulp.task('server:build', function() {
+  browserSync({
+    server: {
+      baseDir: folderName,
+      index: 'index.html',
+      middleware: ssi({
+        baseDir: folderName,
+        ext: '.shtm'
+      })
+    }
+  });
+});
+
 gulp.task('bower', function() {
   gulp.src(configs.html.source, {base: './app'})
   .pipe(wiredep({
