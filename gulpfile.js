@@ -254,4 +254,4 @@ gulp.task('ftp', ['build'], function() {
   }));
 });
 
-gulp.task('default', function() { $.menu(this); });
+gulp.task('default', function() {});
