@@ -10,8 +10,7 @@ var $ = require('gulp-load-plugins')({
 
 // build configs
 var packageName = "pacote";
-var folderName = "dev";
-var build = "./build/" + folderName;
+var folderName = "./build/dev";
 
 // Regex Corrent Path
 var regexCorrentPath = /\.\/.+\b\//g;
@@ -65,11 +64,11 @@ var configs = {
     dest: './app/images/'
   },
   zip: {
-    source: build + '/**/.',
+    source: folderName + '/**/.',
     dest: './build/'
   },
   ftp: {
-    source: build + '/**/.',
+    source: folderName + '/**/.',
     host: '',
     user: '',
     port: '21',
@@ -85,8 +84,8 @@ var configs = {
     './app/css/**/',
     './app/js/**/',
     ],
-    inc: build + '/inc/',
-    dest: build
+    inc: folderName + '/inc/',
+    dest: folderName
   },
 };
 
