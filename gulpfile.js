@@ -146,16 +146,6 @@ gulp.task('compiler-sass', function() {
   .pipe(browserSync.stream());
 });
 
-// Adicionar auto prefixo
-gulp.task('autoprefixer-css', function() {
-  gulp.src(configs.css.source)
-  .pipe($.autoprefixer({
-    browsers: ['last 5 versions'],
-    cascade: false
-  }))
-  .pipe(gulp.dest(configs.css.dest));
-});
-
 //Gerar CSS minificado
 gulp.task('minify-css', function() {
   gulp.src('./app/')
