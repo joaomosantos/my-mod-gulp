@@ -80,8 +80,11 @@ var configs = {
     './app/favicon.ico',
     './app/pdf/*.pdf',
     './app/template/*.mst',
-    './app/css/*.css',
-    './app/js/*.js',
+    './app/css/sass/*.scss',
+    './app/css/less/*.less',
+    './app/css/fonts/**/*',
+    './app/css/main.css',
+    './app/js/main.js',
     ],
     inc: folderName + '/inc/',
     dest: folderName
@@ -206,9 +209,13 @@ gulp.task('build', ['vendor', 'json', 'images'], function() {
 gulp.task('vendor', function() {
   gulp.src(configs.html.main)
   .pipe($.useref())
+  .pipe($.if('*.js', $.uglify()))
+  .pipe($.if('*.css', $.minifyCSS()))
   .pipe(gulp.dest(configs.build.dest));
-  gulp.src(configs.html.inc)
+  return gulp.src(configs.html.inc)
   .pipe($.useref())
+  .pipe($.if('*.js', $.uglify()))
+  .pipe($.if('*.css', $.minifyCSS()))
   .pipe(gulp.dest(configs.build.inc));
 });
 
