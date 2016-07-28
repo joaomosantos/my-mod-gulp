@@ -57,7 +57,7 @@ var configs = {
   },
   json: {
     source: './app/json/*.json',
-    dest: './app/json/',
+    dest: folderName + '/json/'
   },
   img: {
     source: './app/images/**/*',
@@ -78,12 +78,10 @@ var configs = {
   build: {
     source: [
     './app/favicon.ico',
-    './app/pdf/**/',
-    './app/images/**/',
-    './app/template/**/',
-    './app/json/**/',
-    './app/css/**/',
-    './app/js/**/',
+    './app/pdf/*.pdf',
+    './app/template/*.mst',
+    './app/css/*.css',
+    './app/js/*.js',
     ],
     inc: folderName + '/inc/',
     dest: folderName
@@ -182,12 +180,6 @@ gulp.task('minify-js', function() {
   }));
 });
 
-gulp.task("minify-json", function () {
-  gulp.src(configs.json.source)
-  .pipe($.minifyJSON($.minifyJSON.MINI))
-  .pipe(gulp.dest(configs.json.dest));
-});
-
 gulp.task('zip', ['build'], function() {
   gulp.src(configs.zip.source, {base: './build'})
   .pipe($.zip(packageName+'.zip'))
@@ -206,7 +198,7 @@ gulp.task('ftp', function() {
   }));
 });
 
-gulp.task('build', ['vendor', 'images'], function() {
+gulp.task('build', ['vendor', 'json', 'images'], function() {
   gulp.src(configs.build.source, {base: './app/'})
   .pipe(gulp.dest(configs.build.dest));
 });
@@ -218,6 +210,12 @@ gulp.task('vendor', function() {
   gulp.src(configs.html.inc)
   .pipe($.useref())
   .pipe(gulp.dest(configs.build.inc));
+});
+
+gulp.task("json", function () {
+  gulp.src(configs.json.source)
+  .pipe($.minifyJSON($.minifyJSON.MINI))
+  .pipe(gulp.dest(configs.json.dest));
 });
 
 gulp.task('images', function() {
