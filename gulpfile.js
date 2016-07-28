@@ -114,7 +114,7 @@ gulp.task('bower', function() {
   gulp.src(configs.html.source, {base: './app'})
   .pipe(wiredep({
     directory: 'bower_components',
-    exclude: ['modernizr', 'respond']
+    exclude: ['modernizr']
     //ignorePath: /^(\.\.\/)*\.\.\//
   }))
   .pipe(gulp.dest(configs.html.dest));

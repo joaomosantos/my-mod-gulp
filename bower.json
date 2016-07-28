@@ -15,9 +15,8 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "^1.x",
+    "jquery": "^2.x",
     "normalize-css": "^4.1.1",
-    "modernizr": "~2.8.3",
-    "respond": "^1.4.2"
+    "modernizr": "~2.8.3"
   }
 }
