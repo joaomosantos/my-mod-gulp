@@ -68,9 +68,10 @@ var configs = {
     dest: './build/'
   },
   ftp: {
-    source: folderName + '/**/.',
+    source: folderName + '/**/*',
     host: '',
     user: '',
+    pass: '',
     port: '21',
     dest: '/'
   },
@@ -233,24 +234,14 @@ gulp.task('vendor', function() {
 });
 
 // Transferir via FTP
-gulp.task('ftp', ['build'], function() {
-  gulp.src('./app/')
-  .pipe($.prompt.prompt({
-    type: 'password',
-    name: 'pass',
-    message: 'Please enter your password'
-  }, function(res) {
-    gulp.src(configs.ftp.source, {base: './build'})
-    .pipe($.ftp({
-      host: configs.ftp.host,
-      port: configs.ftp.port,
-      user: configs.ftp.user,
-      pass: res.pass,
-      remotePath: configs.ftp.dest
-    }).on('error', function() {
-      console.log('## Password invalid.');
-      process.exit(true);
-    }));
+gulp.task('ftp', function() {
+  return gulp.src(configs.ftp.source)
+  .pipe($.ftp({
+    host: configs.ftp.host,
+    port: configs.ftp.port,
+    user: configs.ftp.user,
+    pass: configs.ftp.pass,
+    remotePath: configs.ftp.dest
   }));
 });
 
