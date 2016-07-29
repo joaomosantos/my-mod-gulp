@@ -53,12 +53,6 @@ gulp compiler-less
 // Compile SASS to CSS
 gulp compiler-sass
 
-// Minify CSS
-gulp minify-css
-
-// Minify JS
-gulp minify-js
-
 // Compress image
 gulp images
 

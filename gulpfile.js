@@ -12,11 +12,6 @@ var $ = require('gulp-load-plugins')({
 var packageName = "pacote";
 var folderName = "./build/dev";
 
-// Regex Corrent Path
-var regexCorrentPath = /\.\/.+\b\//g;
-// Regex Minify js/css
-var regexMinify = /\.min/g;
-
 var configs = {
   sync: {
     ext: [
@@ -46,14 +41,6 @@ var configs = {
     source: './app/css/sass/*.scss',
     main: './app/css/sass/main.scss',
     dest: './app/css/'
-  },
-  css: {
-    source: './app/css/*.css',
-    dest: './app/css/'
-  },
-  js: {
-    source: './app/js/*.js',
-    dest: './app/js/'
   },
   json: {
     source: './app/json/*.json',
@@ -156,36 +143,6 @@ gulp.task('compiler-sass', function() {
   }))
   .pipe(gulp.dest(configs.sass.dest))
   .pipe(browserSync.stream());
-});
-
-gulp.task('minify-css', function() {
-  gulp.src('./app/')
-  .pipe($.prompt.prompt({
-    type: 'input',
-    name: 'file',
-    message: 'File:'
-  }, function(res) {
-    correntFile = configs.css.dest + res.file;
-    correntPath = regexCorrentPath.exec(correntFile);
-    gulp.src(correntFile)
-    .pipe($.minifyCSS())
-    .pipe(gulp.dest(correntPath[0]));
-  }));
-});
-
-gulp.task('minify-js', function() {
-  gulp.src('./app/')
-  .pipe($.prompt.prompt({
-    type: 'input',
-    name: 'file',
-    message: 'File:'
-  }, function(res) {
-    correntFile = configs.js.dest + res.file;
-    correntPath = regexCorrentPath.exec(correntFile);
-    gulp.src(correntFile)
-    .pipe($.uglify())
-    .pipe(gulp.dest(correntPath[0]));
-  }));
 });
 
 gulp.task('zip', ['build'], function() {
