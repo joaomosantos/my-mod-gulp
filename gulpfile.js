@@ -69,9 +69,7 @@ var configs = {
     './app/template/*.mst',
     './app/css/sass/*.scss',
     './app/css/less/*.less',
-    './app/css/fonts/**/*',
-    './app/css/main.css',
-    './app/js/main.js',
+    './app/css/fonts/**/*'
     ],
     inc: folderName + '/inc/',
     dest: folderName
@@ -171,13 +169,13 @@ gulp.task('build', ['vendor', 'json', 'images'], function() {
 gulp.task('vendor', function() {
   gulp.src(configs.html.main)
   .pipe($.useref())
-  .pipe($.if('*.js', $.uglify()))
-  .pipe($.if('*.css', $.minifyCSS()))
+  .pipe($.if('**/!(main).js', $.uglify()))
+  .pipe($.if('**/!(main).css', $.minifyCSS()))
   .pipe(gulp.dest(configs.build.dest));
   return gulp.src(configs.html.inc)
   .pipe($.useref())
-  .pipe($.if('*.js', $.uglify()))
-  .pipe($.if('*.css', $.minifyCSS()))
+  .pipe($.if('**/!(main).js', $.uglify()))
+  .pipe($.if('**/!(main).css', $.minifyCSS()))
   .pipe(gulp.dest(configs.build.inc));
 });
 
