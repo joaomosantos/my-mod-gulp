@@ -24,10 +24,6 @@ var configs = {
     ]
   },
   html: {
-    source: [
-    './app/*.{html,htm,shtm,shtml}',
-    './app/inc/**/*.{html,htm,shtm,shtml}'
-    ],
     main: './app/*.{html,htm,shtm,shtml}',
     inc: './app/inc/**/*.{html,htm,shtm,shtml}',
     dest: './app/'
@@ -112,7 +108,7 @@ gulp.task('server:build', function() {
 });
 
 gulp.task('bower', function() {
-  gulp.src(configs.html.source, {base: './app'})
+  gulp.src(configs.html.main, {base: './app'})
   .pipe(wiredep({
     directory: 'bower_components',
     exclude: ['modernizr']
