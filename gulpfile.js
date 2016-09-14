@@ -25,7 +25,6 @@ var configs = {
   },
   html: {
     main: './app/*.{html,htm,shtm,shtml}',
-    inc: './app/inc/**/*.{html,htm,shtm,shtml}',
     dest: './app/'
   },
   less: {
@@ -60,6 +59,7 @@ var configs = {
   },
   build: {
     source: [
+    './app/inc/**/*.{html,htm,shtm,shtml}',
     './app/favicon.ico',
     './app/pdf/*.pdf',
     './app/template/*.mst',
@@ -67,7 +67,6 @@ var configs = {
     './app/css/less/*.less',
     './app/css/fonts/**/*'
     ],
-    inc: folderName + '/inc/',
     dest: folderName
   },
 };
@@ -168,11 +167,6 @@ gulp.task('vendor', function() {
   .pipe($.if('**/!(main).js', $.uglify()))
   .pipe($.if('**/!(main).css', $.minifyCSS()))
   .pipe(gulp.dest(configs.build.dest));
-  return gulp.src(configs.html.inc)
-  .pipe($.useref())
-  .pipe($.if('**/!(main).js', $.uglify()))
-  .pipe($.if('**/!(main).css', $.minifyCSS()))
-  .pipe(gulp.dest(configs.build.inc));
 });
 
 gulp.task("json", function () {
