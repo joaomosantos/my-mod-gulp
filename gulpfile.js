@@ -129,7 +129,9 @@ gulp.task('compiler-less', function() {
 
 gulp.task('compiler-sass', function() {
   gulp.src(configs.sass.main)
-  .pipe($.sass())
+  .pipe($.sass({
+    includePaths: ['./app/css/sass']
+  }).on('error', $.sass.logError))
   .pipe($.autoprefixer({
     browsers: ['last 5 versions'],
     cascade: false
