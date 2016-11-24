@@ -73,7 +73,7 @@ var configs = {
 
 gulp.task('default', function() {});
 
-gulp.task('server', function() {
+gulp.task('server', ['bower'], function() {
   browserSync({
     server: {
       baseDir: 'app',
