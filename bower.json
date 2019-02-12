@@ -1,11 +1,11 @@
 {
   "name": "my-mod-gulp",
-  "description": "My modulo gulp",
+  "description": "Using gulp 4",
   "main": "",
   "authors": [
     "Max Oliveira"
   ],
-  "license": "MIT",
+  "license": "ISC",
   "homepage": "https://github.com/joaomosantos/my-mod-gulp",
   "ignore": [
     "**/.*",
@@ -15,8 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "^2.x",
-    "normalize-css": "^4.1.1",
-    "modernizr": "~2.8.3"
+    "jquery": "^3.3.1",
+    "normalize-css": "^8.0.1"
   }
 }

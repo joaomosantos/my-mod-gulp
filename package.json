@@ -1,7 +1,7 @@
 {
   "name": "my-mod-gulp",
-  "version": "0.0.0",
-  "description": "My modulo gulp",
+  "version": "1.0.0",
+  "description": "Using gulp 4",
   "main": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,23 +15,26 @@
     "email": "joaomosantos@outlook.com"
   },
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joaomosantos/my-mod-gulp/issues"
+  },
+  "homepage": "https://github.com/joaomosantos/my-mod-gulp#readme",
   "devDependencies": {
-    "browser-sync": "^2.11.1",
+    "bower": "^1.8.8",
+    "browser-sync": "^2.26.3",
     "browsersync-ssi": "^0.2.4",
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^3.1.0",
-    "gulp-ftp": "^1.1.0",
-    "gulp-if": "^2.0.1",
-    "gulp-imagemin": "^3.0.2",
-    "gulp-json-fmt": "^1.0.0",
-    "gulp-less": "^3.0.5",
-    "gulp-load-plugins": "^1.2.4",
-    "gulp-minify-css": "^1.2.4",
-    "gulp-sass": "^2.2.0",
-    "gulp-size": "^2.1.0",
-    "gulp-uglify": "^1.5.3",
-    "gulp-useref": "^3.1.0",
-    "gulp-zip": "^3.2.0",
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-clean-css": "^4.0.0",
+    "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-json-fmt": "^1.0.1",
+    "gulp-less": "^4.0.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.1",
+    "gulp-useref": "^3.1.6",
     "wiredep": "^4.0.0"
   }
 }

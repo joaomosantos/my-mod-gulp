@@ -1,17 +1,16 @@
 # My Modulo Gulp
 
-### Global / Preinstall
+### Install
 
 ```js
-npm install -g bower
-npm install -g gulp
+npm install
 ```
 
-### Usage / Install
+### Usage
 
 ```js
-bower install
-npm install
+npx gulp task_name
+npx bower package_name
 ```
 ### Folders / Structure
 
@@ -42,29 +41,26 @@ folder
 
 ```js
 // Start BrowserSync (support SSI)
-gulp server
-
-// Import dependency bower
-gulp bower
+gulp serve
 
 // Compile LESS to CSS
-gulp compiler-less
+gulp less
 
 // Compile SASS to CSS
-gulp compiler-sass
+gulp sass
 
 // Compress image
 gulp images
 
+// Compress json
+gulp json
+
+// Import dependency bower
+gulp bower
+
+// bundle
+gulp vendor
+
 // Generate build
 gulp build
-
-// Start server (build)
-gulp server:build
-
-// Compact build
-gulp zip
-
-// Transfer ftp (adjust parameters in gulpfile.js)
-gulp ftp
 ```

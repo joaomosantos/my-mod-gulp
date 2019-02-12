@@ -1,18 +1,20 @@
-var gulp = require('gulp');
-var wiredep = require('wiredep').stream;
-var browserSync = require('browser-sync'), ssi = require('browsersync-ssi');
-var $ = require('gulp-load-plugins')({
-  rename: {
-    'gulp-minify-css': 'minifyCSS',
-    'gulp-json-fmt': 'minifyJSON'
-  }
-});
+const gulp = require('gulp');
+const wiredep = require('wiredep').stream;
+const browserSync = require('browser-sync')
+const ssi = require('browsersync-ssi');
+const $less = require('gulp-less');
+const $sass = require('gulp-sass');
+const $autoprefixer = require('gulp-autoprefixer');
+const $rename = require('gulp-rename');
+const $cleancss = require('gulp-clean-css');
+const $uglify = require('gulp-uglify');
+const $sourcemaps = require('gulp-sourcemaps');
+const $imagemin = require('gulp-imagemin');
+const $if = require('gulp-if');
+const $useref = require('gulp-useref');
+const $minifyJSON = require('gulp-json-fmt');
 
-// build configs
-var packageName = "pacote";
-var folderName = "./build/dev";
-
-var configs = {
+const configs = {
   sync: {
     ext: [
     './app/*.{html,htm,shtm,shtml}',
@@ -20,7 +22,6 @@ var configs = {
     './app/css/**/*.css',
     './app/js/**/*.js',
     './app/template/*.mst',
-    './app/json/*.json'
     ]
   },
   html: {
@@ -33,29 +34,17 @@ var configs = {
     dest: './app/css/'
   },
   sass: {
-    source: './app/css/sass/*.scss',
-    main: './app/css/sass/main.scss',
+    source: './app/css/sass/*.{scss,sass}',
+    main: './app/css/sass/main.{scss,sass}',
     dest: './app/css/'
-  },
-  json: {
-    source: './app/json/*.json',
-    dest: folderName + '/json/'
   },
   img: {
     source: './app/images/**/*',
-    dest: folderName + '/images/'
+    dest: './app/images/dist'
   },
-  zip: {
-    source: folderName + '/**/.',
-    dest: './build/'
-  },
-  ftp: {
-    source: folderName + '/**/*',
-    host: '',
-    user: '',
-    pass: '',
-    port: '21',
-    dest: '/'
+  json: {
+    source: './app/json/*.json',
+    dest: './app/json/dist'
   },
   build: {
     source: [
@@ -67,13 +56,69 @@ var configs = {
     './app/css/less/*.less',
     './app/css/fonts/**/*'
     ],
-    dest: folderName
+    dest: './app'
   },
 };
 
-gulp.task('default', function() {});
+function less() {
+  return gulp
+    .src(configs.less.main)
+    .pipe($less())
+    .pipe($autoprefixer({
+      browsers: ['last 5 versions'],
+      cascade: false
+    }))
+    .pipe(gulp.dest(configs.less.dest))
+};
 
-gulp.task('server', ['bower'], function() {
+function sass() {
+  return gulp
+    .src(configs.sass.main)
+    .pipe($sass({
+      includePaths: ['./app/css/sass']
+    }).on('error', $sass.logError))
+    .pipe($autoprefixer({
+      browsers: ['last 5 versions'],
+      cascade: false
+    }))
+    .pipe(gulp.dest(configs.sass.dest))
+};
+
+function images() {
+  return gulp
+    .src(configs.img.source)
+    .pipe($imagemin())
+    .pipe(gulp.dest(configs.img.dest));
+};
+
+function json() {
+  return gulp
+    .src(configs.json.source)
+    .pipe($minifyJSON($minifyJSON.MINI))
+    .pipe(gulp.dest(configs.json.dest));
+};
+
+function bower() {
+  return gulp
+    .src(configs.html.main, {base: './app'})
+    .pipe(wiredep({
+      directory: 'bower_components',
+      //exclude: ['modernizr']
+      //ignorePath: /^(\.\.\/)*\.\.\//
+    }))
+    .pipe(gulp.dest(configs.html.dest));
+};
+
+function vendor() {
+  return gulp
+    .src(configs.html.main)
+    .pipe($useref())
+    .pipe($if('**/!(main).js', $uglify()))
+    .pipe($if('**/!(main).css', $cleancss({level: {1: {specialComments: 0}}})))
+    .pipe(gulp.dest(configs.build.dest));
+};
+
+function server() {
   browserSync({
     server: {
       baseDir: 'app',
@@ -87,98 +132,22 @@ gulp.task('server', ['bower'], function() {
       })
     }
   });
-  gulp.watch(configs.less.source, ['compiler-less'], browserSync.reload);
-  gulp.watch(configs.sass.source, ['compiler-sass'], browserSync.reload);
+  gulp.watch(configs.less.source, gulp.series(less, browserSync.reload));
+  gulp.watch(configs.sass.source, gulp.series(sass, browserSync.reload));
   gulp.watch(configs.sync.ext, browserSync.reload);
-  gulp.watch('bower.json', ['bower'], browserSync.reload);
-});
+  gulp.watch('bower.json', gulp.series(bower, browserSync.reload));
+}
 
-gulp.task('server:build', function() {
-  browserSync({
-    server: {
-      baseDir: folderName,
-      index: 'index.html',
-      middleware: ssi({
-        baseDir: folderName,
-        ext: '.shtm'
-      })
-    }
-  });
-});
+const serve = gulp.series(bower, server);
+//const build = gulp.series(gulp.parallel(less, sass, images, json), bower, vendor);
+//const def = gulp.series(gulp.parallel(less, sass, images, json), serve);
 
-gulp.task('bower', function() {
-  gulp.src(configs.html.main, {base: './app'})
-  .pipe(wiredep({
-    directory: 'bower_components',
-    exclude: ['modernizr']
-    //ignorePath: /^(\.\.\/)*\.\.\//
-  }))
-  .pipe(gulp.dest(configs.html.dest));
-});
-
-gulp.task('compiler-less', function() {
-  gulp.src(configs.less.main)
-  .pipe($.less())
-  .pipe($.autoprefixer({
-    browsers: ['last 5 versions'],
-    cascade: false
-  }))
-  .pipe(gulp.dest(configs.less.dest))
-  .pipe(browserSync.stream());
-});
-
-gulp.task('compiler-sass', function() {
-  gulp.src(configs.sass.main)
-  .pipe($.sass({
-    includePaths: ['./app/css/sass']
-  }).on('error', $.sass.logError))
-  .pipe($.autoprefixer({
-    browsers: ['last 5 versions'],
-    cascade: false
-  }))
-  .pipe(gulp.dest(configs.sass.dest))
-  .pipe(browserSync.stream());
-});
-
-gulp.task('zip', ['build'], function() {
-  gulp.src(configs.zip.source, {base: './build'})
-  .pipe($.zip(packageName+'.zip'))
-  .pipe($.size({ showFiles: true, showTotal: false }))
-  .pipe(gulp.dest(configs.zip.dest));
-});
-
-gulp.task('ftp', function() {
-  return gulp.src(configs.ftp.source)
-  .pipe($.ftp({
-    host: configs.ftp.host,
-    port: configs.ftp.port,
-    user: configs.ftp.user,
-    pass: configs.ftp.pass,
-    remotePath: configs.ftp.dest
-  }));
-});
-
-gulp.task('build', ['vendor', 'json', 'images'], function() {
-  gulp.src(configs.build.source, {base: './app/'})
-  .pipe(gulp.dest(configs.build.dest));
-});
-
-gulp.task('vendor', function() {
-  gulp.src(configs.html.main)
-  .pipe($.useref())
-  .pipe($.if('**/!(main).js', $.uglify()))
-  .pipe($.if('**/!(main).css', $.minifyCSS()))
-  .pipe(gulp.dest(configs.build.dest));
-});
-
-gulp.task("json", function () {
-  gulp.src(configs.json.source)
-  .pipe($.minifyJSON($.minifyJSON.MINI))
-  .pipe(gulp.dest(configs.json.dest));
-});
-
-gulp.task('images', function() {
-  gulp.src(configs.img.source)
-  .pipe($.imagemin())
-  .pipe(gulp.dest(configs.img.dest));
-});
+exports.less = less;
+exports.sass = sass;
+exports.images = images;
+exports.json = json;
+exports.bower = bower;
+exports.vendor = vendor;
+exports.serve = serve;
+//exports.build = build;
+//exports.default = def;
