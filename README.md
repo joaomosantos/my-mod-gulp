@@ -3,7 +3,7 @@
 ### Install
 
 ```js
-npm install
+npm start
 ```
 
 ### Usage
